@@ -10,12 +10,13 @@ namespace Assets.Scripts.Player
 
         private void Awake()
         {
-            _movement = new PlayerMovement(_speedMovement, transform);
+            var rgb = gameObject.GetComponent<Rigidbody2D>();
+            _movement = new PlayerMovement(rgb);
         }
 
-        public void Update()
+        public void FixedUpdate()
         {
-            _movement.Move();
+            _movement.Move(_speedMovement);
         }
     }
 }
