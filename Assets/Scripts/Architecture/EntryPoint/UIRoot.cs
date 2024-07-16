@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Architecture.ServiceLocator;
+using UnityEngine;
 
 namespace Assets.Scripts.Architecture.EntryPoint
 {
-    public sealed class UILoadingScreenView : MonoBehaviour
+    public sealed class UIRoot : MonoBehaviour, IService
     {
         [SerializeField] private GameObject _loadingScreen;
 
