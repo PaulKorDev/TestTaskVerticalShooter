@@ -11,23 +11,35 @@ namespace Assets.Scripts.Shooting.AttackModes
         [SerializeField] private LayerMask enemyLayer;
 
         private BulletObjectPool _pool;
+        private float _shootTimeout;
+        private float _searchTimeout;
+        private Vector3 _direction;
 
-        private void Start()
-        {
-            _pool = ServiceLocator.Get<BulletObjectPool>();
-        }
+
+
         public override void Shoot(Vector3 targetPosition)
         {
-            _pool.GetObject(_spawnPoint.position, targetPosition);
+            ServiceLocator.Get<BulletObjectPool>().GetObject(_spawnPoint.position, targetPosition);
         }
+
         public void SearchAndShoot()
         {
-
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, _range, enemyLayer);
-
-            if (hitEnemies.Length > 0)
+            _shootTimeout -= Time.deltaTime;
+            _searchTimeout -= Time.deltaTime;
+            if (_shootTimeout < 0)
             {
-                ShootAtClosestEnemy(hitEnemies);
+                if (_searchTimeout < 0)
+                {
+                    Collider2D[] hitEnemies;
+                    hitEnemies = Physics2D.OverlapCircleAll(transform.position, _range, enemyLayer);
+                    Debug.Log(hitEnemies.Length);
+                    if (hitEnemies.Length > 0)
+                    {
+                        _shootTimeout = _speedShooting;
+                        ShootAtClosestEnemy(hitEnemies);
+                    }
+                    _searchTimeout = 0.05f;
+                }
             }
         }
 
@@ -37,6 +49,7 @@ namespace Assets.Scripts.Shooting.AttackModes
 
             if (closestEnemy != null)
             {
+                _direction = closestEnemy.transform.position;
                 Shoot(closestEnemy.transform.position);
             }
         }

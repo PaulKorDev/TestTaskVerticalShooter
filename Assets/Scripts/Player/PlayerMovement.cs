@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Architecture.ServiceLocator;
+﻿using Assets.Scripts.Architecture.EventBus;
+using Assets.Scripts.Architecture.ServiceLocator;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -6,6 +8,7 @@ namespace Assets.Scripts.Player
     public class PlayerMovement : IService
     {
         private Rigidbody2D _playerRgb;
+        private Player _player;
         private float _speed;
 
         private float _leftLimit;
@@ -18,10 +21,10 @@ namespace Assets.Scripts.Player
 
         public PlayerMovement()
         {
-            var player = ServiceLocator.Get<Player>();
+            _player = ServiceLocator.Get<Player>();
 
-            _playerRgb = player.GetComponent<Rigidbody2D>();
-            _speed = player.GetSpeed();
+            _playerRgb = _player.GetComponent<Rigidbody2D>();
+            _speed = _player.GetSpeed();
         }
 
         public void InputHandler()
@@ -38,6 +41,7 @@ namespace Assets.Scripts.Player
             x = Input.GetAxis("Horizontal");
             y = Input.GetAxis("Vertical");
         }
+     
 
     }
 

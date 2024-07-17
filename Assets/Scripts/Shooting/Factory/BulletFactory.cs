@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Architecture.ServiceLocator;
 using Assets.Scripts.Configs;
-using Assets.Scripts.Enemy.EnemyTypes;
 using Assets.Scripts.Shooting;
 using UnityEngine;
 
@@ -18,6 +17,7 @@ namespace Assets.Scripts.Enemy.Factory
         public Bullet CreateBullet()
         {
             Bullet bullet = GameObject.Instantiate(_prefab, _bulletContainer);
+            bullet.Init();
             return bullet;
         }
 

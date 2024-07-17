@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Shooting;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy.EnemyTypes
@@ -17,6 +19,14 @@ namespace Assets.Scripts.Enemy.EnemyTypes
                 ServiceLocator.Get<EventBus>().OnFinishLineReached.Trigger(this);
             }
         }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            var bullet = collision.gameObject.GetComponent<Bullet>();
+            TakeDamage(bullet.GetDamage());
+            ServiceLocator.Get<EventBus>().OnBulletHit.Trigger(bullet);
+
+            
+        }
 
         public abstract void InitEnemy();
 
@@ -29,6 +39,8 @@ namespace Assets.Scripts.Enemy.EnemyTypes
 
             CheckIsDead();
         }
+
+
         private void CheckIsDead() {
             if (_hp == 0)
             {

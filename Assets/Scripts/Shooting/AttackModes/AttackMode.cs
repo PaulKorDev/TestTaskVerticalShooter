@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Architecture.ServiceLocator;
+﻿using Assets.Scripts.Architecture.EventBus;
+using Assets.Scripts.Architecture.ServiceLocator;
 using UnityEngine;
 
 namespace Assets.Scripts.Shooting.AttackModes

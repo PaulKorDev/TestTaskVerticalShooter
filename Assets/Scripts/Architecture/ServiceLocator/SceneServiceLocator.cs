@@ -9,6 +9,8 @@ namespace Assets.Scripts.Architecture.ServiceLocator
     public class SceneServiceLocator : MonoBehaviour
     {
         [SerializeField] private GameConfig _settings;
+        [SerializeField] private AutoShooting _autoShooting;
+        [SerializeField] private Player.Player _player;
         [SerializeField] private Transform _enemiesContainer;
         [SerializeField] private Transform _bulletsContainer;
         public void RegisterAllServices()
@@ -18,9 +20,9 @@ namespace Assets.Scripts.Architecture.ServiceLocator
             RegisterEventBus();
             RegisterEnemyFactory();
             RegisterEnemyObjectPool();
+            RegisterAttackMode();
             RegisterBulletFactory();
             RegisterBulletObjectPool();
-            RegisterAttackMode();
             RegisterPlayer();
             RegisterPlayerMovement();
 
@@ -34,13 +36,12 @@ namespace Assets.Scripts.Architecture.ServiceLocator
         
         private void RegisterAttackMode()
         {
-            var attackMode = GameObject.FindAnyObjectByType<AutoShooting>();
-            ServiceLocator.Register(attackMode);
+            _autoShooting.Init();
+            ServiceLocator.Register(_autoShooting);
         }
         private void RegisterPlayer()
         {
-            var player = GameObject.FindAnyObjectByType<Player.Player>();
-            ServiceLocator.Register(player);
+            ServiceLocator.Register(_player);
         }
         private void RegisterEventBus()
         {

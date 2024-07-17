@@ -11,6 +11,7 @@ namespace Assets.Scripts.Architecture.StateMachine
         private bool _isPaysed;
         private PlayerMovement _playerMovement;
         private EnemyObjectPool _enemyObjectPool;
+        private BulletObjectPool _bulletObjectPool;
         private EnemySpawner _enemySpawner;
         private AutoShooting _attackMode;
         public GameplayLoopState(StateMachine<GameState> stateMachine) : base(stateMachine) {}
@@ -19,6 +20,7 @@ namespace Assets.Scripts.Architecture.StateMachine
         {
             _playerMovement = ServiceLocator.ServiceLocator.Get<PlayerMovement>();
             _enemyObjectPool = ServiceLocator.ServiceLocator.Get<EnemyObjectPool>();
+            _bulletObjectPool = ServiceLocator.ServiceLocator.Get<BulletObjectPool>();
             _enemySpawner = GameObject.FindFirstObjectByType<EnemySpawner>();
             _attackMode = GameObject.FindFirstObjectByType<AutoShooting>();
 
@@ -40,8 +42,7 @@ namespace Assets.Scripts.Architecture.StateMachine
             if (!_isPaysed)
             {
                 _playerMovement.Move();
-                EnemyMovement();
-                //BulletMovement
+                BulletMovement();
             }
         }
         private void EnemyMovement()
@@ -49,6 +50,13 @@ namespace Assets.Scripts.Architecture.StateMachine
             foreach (var enemy in _enemyObjectPool.GetAllActiveObjects())
             {
                 enemy.Move();
+            };
+        }
+        private void BulletMovement()
+        {
+            foreach (var bullet in _bulletObjectPool.GetAllActiveObjects())
+            {
+                bullet.Fly();
             };
         }
         private void PauseGame() => _isPaysed = true; 

@@ -2285,6 +2285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 831204677}
+  - component: {fileID: 831204678}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -2309,6 +2310,22 @@ Transform:
   m_Father: {fileID: 324831511}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &831204678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831204676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95963d267aea47f43a29e0a0d2ea1428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoint: {fileID: 831204677}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &862985915
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,6 +2515,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 540d5b872129e414ca95d6457618967c, type: 2}
+  _autoShooting: {fileID: 831204678}
+  _player: {fileID: 324831512}
   _enemiesContainer: {fileID: 22086731}
   _bulletsContainer: {fileID: 1452988110}
 --- !u!4 &1054076507
