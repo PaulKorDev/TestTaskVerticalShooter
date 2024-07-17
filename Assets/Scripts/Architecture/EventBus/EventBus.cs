@@ -7,7 +7,10 @@ namespace Assets.Scripts.Architecture.EventBus
     {
         public CustomEvent<EnemyBase> OnEnemyDied = new();
         public CustomEvent<EnemyBase> OnFinishLineReached = new();
+        public CustomEvent<int> OnHealthChanged = new();
         public CustomEvent OnPlayerWon = new();
         public CustomEvent OnPlayerLost = new();
+        public CustomEvent GameRestarted = new();
+        public CustomEvent OnButtonRestartClicked = new();
     }
 }
