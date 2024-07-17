@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Enemy;
 using Assets.Scripts.Player;
+using Assets.Scripts.Shooting.AttackModes;
 using UnityEngine;
 
 namespace Assets.Scripts.Architecture.StateMachine
@@ -10,14 +11,18 @@ namespace Assets.Scripts.Architecture.StateMachine
         private bool _isPaysed;
         private PlayerMovement _playerMovement;
         private EnemyObjectPool _enemyObjectPool;
+        private BulletObjectPool _bulletObjectPool;
         private EnemySpawner _enemySpawner;
+        private AutoShooting _attackMode;
         public GameplayLoopState(StateMachine<GameState> stateMachine) : base(stateMachine) {}
 
         public override void Enter()
         {
             _playerMovement = ServiceLocator.ServiceLocator.Get<PlayerMovement>();
             _enemyObjectPool = ServiceLocator.ServiceLocator.Get<EnemyObjectPool>();
+            _bulletObjectPool = ServiceLocator.ServiceLocator.Get<BulletObjectPool>();
             _enemySpawner = GameObject.FindFirstObjectByType<EnemySpawner>();
+            _attackMode = GameObject.FindFirstObjectByType<AutoShooting>();
 
             SubscribeToSignals();
             ResumeGame();
@@ -29,6 +34,7 @@ namespace Assets.Scripts.Architecture.StateMachine
                 _playerMovement.InputHandler();
                 _enemySpawner.TimeOutSpawn();
                 EnemyMovement();
+                _attackMode.SearchAndShoot();
             }
         }
         public override void UpdatePhysic()
@@ -36,8 +42,7 @@ namespace Assets.Scripts.Architecture.StateMachine
             if (!_isPaysed)
             {
                 _playerMovement.Move();
-                EnemyMovement();
-                //BulletMovement
+                BulletMovement();
             }
         }
         private void EnemyMovement()
@@ -45,6 +50,13 @@ namespace Assets.Scripts.Architecture.StateMachine
             foreach (var enemy in _enemyObjectPool.GetAllActiveObjects())
             {
                 enemy.Move();
+            };
+        }
+        private void BulletMovement()
+        {
+            foreach (var bullet in _bulletObjectPool.GetAllActiveObjects())
+            {
+                bullet.Fly();
             };
         }
         private void PauseGame() => _isPaysed = true; 
