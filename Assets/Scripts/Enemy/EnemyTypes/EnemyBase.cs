@@ -1,17 +1,18 @@
 ﻿using Assets.Scripts.Architecture.ServiceLocator;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemy
+namespace Assets.Scripts.Enemy.EnemyTypes
 {
-    public abstract class Enemy : MonoBehaviour
+    public abstract class EnemyBase : MonoBehaviour
     {
         private int _hp;
         protected float _speedMovement;
 
-        protected Enemy()
+        private EnemyFactoryConfig _enemySettings;
+
+        protected EnemyBase()
         {
-            var enemySettings = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
-            _speedMovement = Random.Range(enemySettings.SpeedMin, enemySettings.SpeedMax);
+            _enemySettings = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
         }
         abstract public void Move();
 
@@ -21,6 +22,13 @@ namespace Assets.Scripts.Enemy
                 //EventBus.OnFinishLineReached
             }
         }
+
+        public void InitEnemy()
+        {
+            SetSpeed();
+            SetHP();
+        }
+
         public void TakeDamage(int damage)
         {
             if (damage < 0) {
@@ -36,5 +44,9 @@ namespace Assets.Scripts.Enemy
                 //EventBus.Trigger(OnEnemyKilled)
             }
         }
+
+        private void SetHP() => _hp = _enemySettings.EnemyHP;
+        private void SetSpeed() => _speedMovement = Random.Range(_enemySettings.SpeedMin, _enemySettings.SpeedMax);
+
     }
 }

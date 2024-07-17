@@ -5,10 +5,6 @@ namespace Assets.Scripts.Architecture.ObjectPool
 {
     public class ObjectPool<T> where T : MonoBehaviour
     {
-        //Uncomment if using Assets.Scripts.Architecture.ReactiveProperty, and you will can to change pool limit dinamicaly.
-        //public ReactiveProperty<int> PoolLimit;
-
-        //Comment if using Assets.Scripts.Architecture.ReactiveProperty
         private int _poolLimit;
         public bool AutoExpand { get; set; }
 
@@ -25,12 +21,6 @@ namespace Assets.Scripts.Architecture.ObjectPool
             _factory = Factory;
             _getEffect = GetEffect;
             _returnEffect = ReturnEffect;
-
-            //Can uncomment if using Assets.Scripts.Architecture.ReactiveProperty
-            //PoolLimit = new ReactiveProperty<int>(poolLimit);
-            //PoolLimit.OnChanged += CheckPoolLimit;
-
-            //Comment if using Assets.Scripts.Architecture.ReactiveProperty
             _poolLimit = poolLimit;
 
             CreatePool(precount);
@@ -49,8 +39,7 @@ namespace Assets.Scripts.Architecture.ObjectPool
             } else if (AutoExpand)
             {
                 T obj = CreateObject(true);
-                //CheckPoolLimit(PoolLimit.Value); //Uncomment if using Assets.Scripts.Architecture.ReactiveProperty
-                CheckPoolLimit(_poolLimit); //Comment if using Assets.Scripts.Architecture.ReactiveProperty
+                CheckPoolLimit(_poolLimit); 
                 return obj;
             }
                 
@@ -97,7 +86,7 @@ namespace Assets.Scripts.Architecture.ObjectPool
         {
             for (int i = 0; i < count; i++)
             {
-                ReturnObject(CreateObject());
+                CreateObject();
             }
         }
         private void CheckPoolLimit(int currentPoolLimit)
@@ -113,10 +102,16 @@ namespace Assets.Scripts.Architecture.ObjectPool
 
         private T CreateObject(bool isActiveByDefault = false)
         {
-            //TODO: if object creating in CreatePool method => will not call getEffect, because getEffect can be expensive.
             T createdObject = _factory();
-            _getEffect(createdObject);
-            _activeObjects.Add(createdObject);
+            if (isActiveByDefault)
+            {
+                _getEffect(createdObject);
+                _activeObjects.Add(createdObject);
+            }
+            else 
+            {
+                createdObject.gameObject.SetActive(false);
+            }
             return createdObject;
 
         }
