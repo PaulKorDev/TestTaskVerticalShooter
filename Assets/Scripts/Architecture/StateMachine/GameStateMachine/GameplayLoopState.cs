@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Enemy;
 using Assets.Scripts.Player;
+using Assets.Scripts.Shooting.AttackModes;
 using UnityEngine;
 
 namespace Assets.Scripts.Architecture.StateMachine
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Architecture.StateMachine
         private PlayerMovement _playerMovement;
         private EnemyObjectPool _enemyObjectPool;
         private EnemySpawner _enemySpawner;
+        private AutoShooting _attackMode;
         public GameplayLoopState(StateMachine<GameState> stateMachine) : base(stateMachine) {}
 
         public override void Enter()
@@ -18,6 +20,7 @@ namespace Assets.Scripts.Architecture.StateMachine
             _playerMovement = ServiceLocator.ServiceLocator.Get<PlayerMovement>();
             _enemyObjectPool = ServiceLocator.ServiceLocator.Get<EnemyObjectPool>();
             _enemySpawner = GameObject.FindFirstObjectByType<EnemySpawner>();
+            _attackMode = GameObject.FindFirstObjectByType<AutoShooting>();
 
             SubscribeToSignals();
             ResumeGame();
@@ -29,6 +32,7 @@ namespace Assets.Scripts.Architecture.StateMachine
                 _playerMovement.InputHandler();
                 _enemySpawner.TimeOutSpawn();
                 EnemyMovement();
+                _attackMode.SearchAndShoot();
             }
         }
         public override void UpdatePhysic()
