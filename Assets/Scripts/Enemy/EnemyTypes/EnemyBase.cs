@@ -8,8 +8,6 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         protected int _hp;
         protected float _speedMovement;
 
-        private EnemyFactoryConfig _enemySettings;
-
         abstract public void Move();
 
         private void OnCollisionEnter2D(Collision2D collision)
