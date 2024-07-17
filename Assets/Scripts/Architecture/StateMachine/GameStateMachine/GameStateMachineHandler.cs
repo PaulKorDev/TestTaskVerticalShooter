@@ -20,6 +20,10 @@ namespace Assets.Scripts.Architecture.StateMachine
         {
             _concreteStateMachine.CurrentState.UpdateLogic();
         }
+        private void FixedUpdate()
+        {
+            _concreteStateMachine.CurrentState.UpdatePhysic();
+        }
 
         private void AddStates()
         {

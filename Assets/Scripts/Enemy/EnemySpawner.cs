@@ -31,6 +31,8 @@ namespace Assets.Scripts.Enemy
         {
             ServiceLocator.Get<EventBus>().OnEnemyDied.Subscribe(RemoveEnemy);
             ServiceLocator.Get<EventBus>().OnFinishLineReached.Subscribe(RemoveEnemy);
+            ServiceLocator.Get<EventBus>().GameRestarted.Subscribe(RemoveAllEnemies);
+            ServiceLocator.Get<EventBus>().GameRestarted.Subscribe(UpdateSettings);
 
             _enemySpawnConfig = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
             UpdateSettings();
@@ -48,5 +50,6 @@ namespace Assets.Scripts.Enemy
         private void UpdateTimer() => _timeOut = Random.Range(_enemySpawnConfig.TimeoutMin, _enemySpawnConfig.TimeoutMin);
 
         private void RemoveEnemy(EnemyBase enemy) => ServiceLocator.Get<EnemyObjectPool>().ReturnObject(enemy);
+        private void RemoveAllEnemies() => ServiceLocator.Get<EnemyObjectPool>().ReturnAllActiveObjects();
     }
 }

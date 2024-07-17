@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Architecture.StateMachine
+﻿using Assets.Scripts.Architecture.EventBus;
+
+namespace Assets.Scripts.Architecture.StateMachine
 {
     public sealed class RestartState : GameState
     {
@@ -8,8 +10,7 @@
 
         public override void Enter()
         {
-            //Init EnemySpawner
-            //Clear ObjectPool
+            ServiceLocator.ServiceLocator.Get<EventBus.EventBus>().GameRestarted.Trigger();
             _stateMachine.EnterToState<GameplayLoopState>();
         }
 
