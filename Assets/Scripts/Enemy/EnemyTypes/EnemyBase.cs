@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Architecture.ServiceLocator;
+﻿using Assets.Scripts.Architecture.EventBus;
+using Assets.Scripts.Architecture.ServiceLocator;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy.EnemyTypes
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.tag == "Obstacle") {
-                //EventBus.OnFinishLineReached
+                ServiceLocator.Get<EventBus>().OnFinishLineReached.Trigger(this);
             }
         }
 
@@ -31,7 +32,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         private void CheckIsDead() {
             if (_hp == 0)
             {
-                //EventBus.Trigger(OnEnemyKilled)
+                ServiceLocator.Get<EventBus>().OnEnemyDied.Trigger(this);
             }
         }
     }

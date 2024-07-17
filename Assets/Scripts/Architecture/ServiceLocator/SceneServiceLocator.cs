@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Architecture.ObjectPool;
-using Assets.Scripts.Enemy;
+﻿using Assets.Scripts.Architecture.EventBus;
+using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Enemy.Factory;
 using UnityEngine;
 
@@ -13,11 +13,17 @@ namespace Assets.Scripts.Architecture.ServiceLocator
         {
             //here register services
             RegisterSettings();
+            RegisterEventBus();
             RegisterEnemyFactory();
             RegisterEnemyObjectPool();
 
         }
 
+        private void RegisterEventBus()
+        {
+            EventBus.EventBus eventBus = new();
+            ServiceLocator.Register(eventBus);
+        }
         private void RegisterSettings()
         {
             ServiceLocator.Register(_settings);

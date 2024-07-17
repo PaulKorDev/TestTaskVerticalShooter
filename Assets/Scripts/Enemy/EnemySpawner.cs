@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Architecture.ObjectPool;
+﻿using Assets.Scripts.Architecture.EventBus;
+using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Architecture.ServiceLocator;
 using Assets.Scripts.Enemy.EnemyTypes;
 using UnityEngine;
@@ -28,7 +29,8 @@ namespace Assets.Scripts.Enemy
 
         public void Init()
         {
-            //AddListener.EnemyKilled += RemoveEnemy
+            ServiceLocator.Get<EventBus>().OnEnemyDied.Subscribe(RemoveEnemy);
+            ServiceLocator.Get<EventBus>().OnFinishLineReached.Subscribe(RemoveEnemy);
 
             _enemySpawnConfig = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
             UpdateSettings();
@@ -46,9 +48,5 @@ namespace Assets.Scripts.Enemy
         private void UpdateTimer() => _timeOut = Random.Range(_enemySpawnConfig.TimeoutMin, _enemySpawnConfig.TimeoutMin);
 
         private void RemoveEnemy(EnemyBase enemy) => ServiceLocator.Get<EnemyObjectPool>().ReturnObject(enemy);
-
-        
-
-
     }
 }
