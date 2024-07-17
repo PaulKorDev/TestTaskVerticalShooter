@@ -16,3 +16,32 @@ For enemy, I also will create object pool
 ![image](https://github.com/user-attachments/assets/bc4a2a9b-d309-46a6-b4cc-f2a1e73dee2b)
 ### Configs
 ![image](https://github.com/user-attachments/assets/cbd75a67-14cc-47b1-9f7a-132fe2816b30)
+# What patterns used
+  - Fabric (for bullets and enemies)
+  - EntryPoint
+  - StateMachine (for game)
+  - ObjectPool (for bullets and enemies)
+  - EventBus
+  - Separate Logic and View
+# Where to start?
+Start from GameStateMachineHandler - it's like entry point
+# Where were the difficulties?
+  - I spent a lot of time to create high quality architecture and at start I create big EntryPoinit with showing of loading screen and transit between scenes, but for this game it was unnecessarily, so I delete this from my final result.
+  - I spen a lot of time to fix bugs
+  - Some simple functionality turned out to be not so simple
+  - After the little change I had to wait 4 minutes for the Unity load changes.
+# Here's what else I'd like to upgrade in the game
+I decide to finish the test task, but what else can upgrade:
+  - Background (I import tilemap from AssetStore but forget about it)
+  - Rotation of player when shooting
+  - Animation of hit for enemies
+  - Most better physic of bullets
+  - Some refactor code in Shooting folder (Towards the end I started making dirty code due to fatigue)
+# How you can to expand my game
+  - Add new enemies - I create very flexible architecture for this
+  - Add new bullets - but need make class Bullet - abstract and some refactor code
+  - Add new AttackModes for different behaviour
+  - etc) 
+# What bugs can be:
+  - Sometimes, when you kill all enemies, you won't see the victory window => perhaps problem in Events
+  - If play with horizontal resolution, UI will broke => need adjust anchors
