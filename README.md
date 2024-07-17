@@ -34,7 +34,7 @@ For enemy, I also will create object pool
   - EventBus
   - Separate Logic and View
 # Where to start?
-Start from GameStateMachineHandler - it's like entry point
+Start from GameStateMachineHandler - it's like entry point. I develop with resolution 900x1600,so,on other resolution UI can be deformed. I bad adjust it.
 # Where were the difficulties?
   - I spent a lot of time to create high quality architecture and at start I create big EntryPoinit with showing of loading screen and transit between scenes, but for this game it was unnecessarily, so I delete this from my final result.
   - I spen a lot of time to fix bugs
