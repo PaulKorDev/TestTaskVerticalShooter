@@ -16,17 +16,18 @@ namespace Assets.Scripts.Player
 
         private void Start()
         {
-            var rgb = gameObject.GetComponent<Rigidbody2D>();
-            _movement = new PlayerMovement(rgb);
-
             _eventBus = ServiceLocator.Get<EventBus>();
             _eventBus.OnFinishLineReached.Subscribe(ReduceHP);
             _eventBus.OnHealthChanged.Trigger(_hp); //For setting hp to PlayerGUI
         }
 
-        public void FixedUpdate()
+        public Rigidbody2D GetRigidBody()
         {
-            _movement.Move(_speedMovement);
+            return gameObject.GetComponent<Rigidbody2D>();
+        }
+        public float GetSpeed()
+        {
+            return _speedMovement;
         }
 
         private void ReduceHP(EnemyBase enemy)

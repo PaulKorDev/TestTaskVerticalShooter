@@ -13,10 +13,8 @@
             _stateMachine.EnterToState<GameplayLoopState>();
         }
 
-        public override void UpdateLogic()
-        {
-           //
-        }
+        public override void UpdateLogic() { }
 
+        public override void UpdatePhysic() { }
     }
 }

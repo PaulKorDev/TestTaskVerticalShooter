@@ -22,9 +22,7 @@ namespace Assets.Scripts.Architecture.StateMachine
             _stateMachine.EnterToState<RestartState>();
         }
 
-        public override void UpdateLogic()
-        {
-
-        }
+        public override void UpdateLogic() { }
+        public override void UpdatePhysic() { }
     }
 }

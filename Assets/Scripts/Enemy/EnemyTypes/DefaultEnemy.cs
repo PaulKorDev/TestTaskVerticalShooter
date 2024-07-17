@@ -14,10 +14,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         {
             _enemyRgb = GetComponent<Rigidbody2D>();
         }
-        private void Update()
-        {
-            Move();
-        }
+
         override public void InitEnemy()
         {
             _enemySettings = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
