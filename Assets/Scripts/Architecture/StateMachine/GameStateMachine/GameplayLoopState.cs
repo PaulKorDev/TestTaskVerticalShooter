@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Architecture.ObjectPool;
+using Assets.Scripts.Enemy;
 using Assets.Scripts.Player;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ namespace Assets.Scripts.Architecture.StateMachine
         private bool _isPaysed;
         private PlayerMovement _playerMovement;
         private EnemyObjectPool _enemyObjectPool;
+        private EnemySpawner _enemySpawner;
         public GameplayLoopState(StateMachine<GameState> stateMachine) : base(stateMachine) {}
 
         public override void Enter()
         {
             _playerMovement = ServiceLocator.ServiceLocator.Get<PlayerMovement>();
             _enemyObjectPool = ServiceLocator.ServiceLocator.Get<EnemyObjectPool>();
+            _enemySpawner = GameObject.FindFirstObjectByType<EnemySpawner>();
 
             SubscribeToSignals();
             ResumeGame();
@@ -24,6 +27,7 @@ namespace Assets.Scripts.Architecture.StateMachine
             if (!_isPaysed)
             {
                 _playerMovement.InputHandler();
+                _enemySpawner.TimeOutSpawn();
                 EnemyMovement();
             }
         }

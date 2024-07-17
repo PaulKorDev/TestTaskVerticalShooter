@@ -673,7 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c6c12b6b045f54e85da3f23cf11f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 2
+  _maxHp: 5
   _speedMovement: 200
 --- !u!61 &324831513
 BoxCollider2D:
@@ -2336,10 +2336,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 600662152}
   - {fileID: 756269965}
   - {fileID: 1149893109}
   - {fileID: 466658737}
-  - {fileID: 600662152}
   m_Father: {fileID: 2052879010}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

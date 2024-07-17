@@ -19,6 +19,8 @@ namespace Assets.Scripts.Architecture.StateMachine
 
             _enemySpawner.Init();
 
+            LoseWinConditions loseWinConditions = new LoseWinConditions();
+
             _stateMachine.EnterToState<RestartState>();
         }
 

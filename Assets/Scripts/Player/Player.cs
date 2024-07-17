@@ -20,8 +20,9 @@ namespace Assets.Scripts.Player
         private void Start()
         {
             _eventBus = ServiceLocator.Get<EventBus>();
-            _eventBus.OnFinishLineReached.Subscribe(ReduceHP);
+            _eventBus.OnFinishLineReached.Subscribe(ReduceHP, 4);
             _eventBus.GameRestarted.Subscribe(InitPlayer);
+            InitPlayer();
         }
 
         public void InitPlayer()
@@ -37,6 +38,7 @@ namespace Assets.Scripts.Player
         {
             return _speedMovement;
         }
+        public int GetHP() => _hp;
         private void SetHP()
         {
             _hp = _maxHp;
@@ -46,8 +48,6 @@ namespace Assets.Scripts.Player
         {
             _hp = Mathf.Clamp(--_hp, 0, _maxHp);
             ServiceLocator.Get<EventBus>().OnHealthChanged.Trigger(_hp);
-            if (_hp <= 0)
-                _eventBus.OnPlayerLost.Trigger();
         }
     }
 }

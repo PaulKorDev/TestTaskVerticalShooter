@@ -18,7 +18,7 @@ namespace Assets.Scripts.Player
 
         public PlayerMovement()
         {
-            var player = GameObject.FindAnyObjectByType<Player>();
+            var player = ServiceLocator.Get<Player>();
 
             _playerRgb = player.GetComponent<Rigidbody2D>();
             _speed = player.GetSpeed();
