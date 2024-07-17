@@ -5,32 +5,22 @@ namespace Assets.Scripts.Architecture.ObjectPool
 {
     public class ObjectPool<T> where T : MonoBehaviour
     {
-        //Uncomment if using Assets.Scripts.Architecture.ReactiveProperty, and you will can to change pool limit dinamicaly.
-        //public ReactiveProperty<int> PoolLimit;
-
-        //Comment if using Assets.Scripts.Architecture.ReactiveProperty
         private int _poolLimit;
         public bool AutoExpand { get; set; }
 
         private readonly Func<T> _factory;
         private readonly Action<T> _returnEffect;
-        private readonly Action<T> _getEffect;
+        private readonly Action<T, Vector3> _getEffect;
 
         private Queue<T> _pool = new Queue<T>();
         private List<T> _activeObjects = new List<T>();
 
-        public ObjectPool(Func<T> Factory, Action<T> GetEffect, Action<T> ReturnEffect, int precount, bool autoExpand = true, int poolLimit = 0)
+        public ObjectPool(Func<T> Factory, Action<T, Vector3> GetEffect, Action<T> ReturnEffect, int precount, bool autoExpand = true, int poolLimit = 0)
         {
             AutoExpand = autoExpand;
             _factory = Factory;
             _getEffect = GetEffect;
             _returnEffect = ReturnEffect;
-
-            //Can uncomment if using Assets.Scripts.Architecture.ReactiveProperty
-            //PoolLimit = new ReactiveProperty<int>(poolLimit);
-            //PoolLimit.OnChanged += CheckPoolLimit;
-
-            //Comment if using Assets.Scripts.Architecture.ReactiveProperty
             _poolLimit = poolLimit;
 
             CreatePool(precount);
@@ -38,19 +28,18 @@ namespace Assets.Scripts.Architecture.ObjectPool
 
 
 
-        public T GetObject()
+        public T GetObject(Vector3 spawnPoint)
         {
             if (_pool.Count > 0)
             {
                 T obj = _pool.Dequeue();       
-                _getEffect(obj);
+                _getEffect(obj, spawnPoint);
                 _activeObjects.Add(obj);
                 return obj;
             } else if (AutoExpand)
             {
-                T obj = CreateObject(true);
-                //CheckPoolLimit(PoolLimit.Value); //Uncomment if using Assets.Scripts.Architecture.ReactiveProperty
-                CheckPoolLimit(_poolLimit); //Comment if using Assets.Scripts.Architecture.ReactiveProperty
+                T obj = CreateObject(spawnPoint);
+                CheckPoolLimit(_poolLimit); 
                 return obj;
             }
                 
@@ -97,7 +86,7 @@ namespace Assets.Scripts.Architecture.ObjectPool
         {
             for (int i = 0; i < count; i++)
             {
-                ReturnObject(CreateObject());
+                CreateObject();
             }
         }
         private void CheckPoolLimit(int currentPoolLimit)
@@ -110,13 +99,22 @@ namespace Assets.Scripts.Architecture.ObjectPool
             if (currentPoolLimit <= 0) //0 OR less mean that pool hasn't limit (infinity)
                 AutoExpand = true;
         }
-
-        private T CreateObject(bool isActiveByDefault = false)
+        private T CreateObject()
         {
-            //TODO: if object creating in CreatePool method => will not call getEffect, because getEffect can be expensive.
             T createdObject = _factory();
-            _getEffect(createdObject);
+            createdObject.gameObject.SetActive(false);
+            _pool.Enqueue(createdObject);
+
+            return createdObject;
+
+        }
+        private T CreateObject(Vector3 spawnPoint)
+        {
+            T createdObject = _factory();
+            
+            _getEffect(createdObject, spawnPoint);
             _activeObjects.Add(createdObject);
+            
             return createdObject;
 
         }

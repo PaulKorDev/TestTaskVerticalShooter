@@ -1211,6 +1211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneServiceLocator: {fileID: 1054076506}
+  _enemySpawner: {fileID: 1196287167}
 --- !u!4 &881660558
 Transform:
   m_ObjectHideFlags: 0
@@ -1256,6 +1257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 540d5b872129e414ca95d6457618967c, type: 2}
+  _enemyContainer: {fileID: 22086731}
 --- !u!4 &1054076507
 Transform:
   m_ObjectHideFlags: 0
@@ -1311,6 +1313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1196287166}
+  - component: {fileID: 1196287167}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -1335,6 +1338,22 @@ Transform:
   m_Father: {fileID: 1945205182}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196287167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196287165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa5a37814fdde449914331c26282e48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoints:
+  - {fileID: 700443651}
+  - {fileID: 1330439775}
+  - {fileID: 1084312898}
 --- !u!1 &1325004729
 GameObject:
   m_ObjectHideFlags: 0
