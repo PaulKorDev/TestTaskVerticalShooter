@@ -28,6 +28,7 @@ For enemy, I also will create object pool
 # What patterns used
   - Fabric (for bullets and enemies)
   - EntryPoint
+  - ServiceLocator
   - StateMachine (for game)
   - ObjectPool (for bullets and enemies)
   - EventBus
