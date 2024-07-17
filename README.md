@@ -1,4 +1,13 @@
 # TestTaskVerticalShooter
+## Content
+* [Drafts](#drafts)
+* [What patterns used](#What-patterns-used)
+* [Where to start?](#where-to-start?)
+* [Where were the difficulties?](#where-were-the-difficulties?)
+* [Here's what else I'd like to upgrade in the game](#here's-what-else-I'd-like-to-upgrade-in-the-game)
+* [How you can to expand my game](#how-you-can-to-expand-my-game)
+* [What bugs can be:](#what-bugs-can-be:)
+  
 ## Drafts
 ### Player
 ![image](https://github.com/user-attachments/assets/c41cb964-926d-4a3e-b051-592a64258538)
