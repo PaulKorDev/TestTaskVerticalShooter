@@ -2,6 +2,7 @@
 
 namespace Assets.Scripts.Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Player : MonoBehaviour
     {
         [SerializeField] private float _speedMovement;

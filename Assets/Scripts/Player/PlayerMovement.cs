@@ -20,7 +20,7 @@ namespace Assets.Scripts.Player
         {
             GetInputAxis(out float horizontal, out float vertical);
 
-            _playerRgb.velocity = new Vector3(horizontal, vertical, 0).normalized * speedMovement * Time.deltaTime;
+            _playerRgb.velocity = new Vector3(horizontal, vertical, 0).normalized * speedMovement * Time.fixedDeltaTime;
         }
 
         private void GetInputAxis(out float x, out float y)
