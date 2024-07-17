@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Architecture.EntryPoint;
-
-namespace Assets.Scripts.Architecture.StateMachine
+﻿namespace Assets.Scripts.Architecture.StateMachine
 {
     public sealed class GameplayLoopState : GameState
     {
@@ -10,7 +8,6 @@ namespace Assets.Scripts.Architecture.StateMachine
 
         public override void Enter()
         {
-            ServiceLocator.ServiceLocator.Get<UIRoot>().HideLoadingScreen();
         }
 
         public override void UpdateLogic()

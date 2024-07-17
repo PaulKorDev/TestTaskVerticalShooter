@@ -1,13 +1,20 @@
-﻿namespace Assets.Scripts.Architecture.StateMachine
+﻿using Assets.Scripts.Architecture.ServiceLocator;
+
+namespace Assets.Scripts.Architecture.StateMachine
 {
     public sealed class BootstrapState : GameState
     {
-        public BootstrapState(StateMachine<GameState> stateMachine) : base(stateMachine) {}
+        private SceneServiceLocator _serviceLocator;
+        public BootstrapState(StateMachine<GameState> stateMachine, SceneServiceLocator serviceLocator) : base(stateMachine) 
+        {
+            _serviceLocator = serviceLocator;
+        }
 
         public override void Enter()
         {
-            _stateMachine.EnterToState<GameplayLoadState>();
+            _serviceLocator.RegisterAllServices();
 
+            _stateMachine.EnterToState<GameplayLoopState>();
         }
 
         public override void UpdateLogic()
