@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyFactoryConfig
   m_EditorClassIdentifier: 
   EnemyHP: 10
-  EnemyCountMin: 5
-  EnemyCountMax: 6
-  TimeoutMin: 2
-  TimeoutMax: 5
-  SpeedMin: 0.5
-  SpeedMax: 2
+  EnemyCountMin: 10
+  EnemyCountMax: 15
+  TimeoutMin: 0.8
+  TimeoutMax: 1.3
+  SpeedMin: 2
+  SpeedMax: 5

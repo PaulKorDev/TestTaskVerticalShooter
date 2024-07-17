@@ -32,7 +32,6 @@ namespace Assets.Scripts.Shooting.AttackModes
                 {
                     Collider2D[] hitEnemies;
                     hitEnemies = Physics2D.OverlapCircleAll(transform.position, _range, enemyLayer);
-                    Debug.Log(hitEnemies.Length);
                     if (hitEnemies.Length > 0)
                     {
                         _shootTimeout = _speedShooting;
