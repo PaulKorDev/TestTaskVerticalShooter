@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5d99fe5903b4843924c8554e95f7df, type: 3}
   m_Name: EnemyFactoryConfig
   m_EditorClassIdentifier: 
-  EnemyCountMin: 0
-  EnemyCountMax: 0
-  TimeoutMin: 0
-  TimeoutMax: 0
-  SpeedMin: 0
-  SpeedMax: 0
-  EnemyHP: 0
-  BulletSpeed: 0
+  EnemyHP: 10
+  EnemyCountMin: 3
+  EnemyCountMax: 6
+  TimeoutMin: 2
+  TimeoutMax: 3
+  SpeedMin: 2
+  SpeedMax: 5

@@ -5,15 +5,11 @@ namespace Assets.Scripts.Enemy.EnemyTypes
 {
     public abstract class EnemyBase : MonoBehaviour
     {
-        private int _hp;
+        protected int _hp;
         protected float _speedMovement;
 
         private EnemyFactoryConfig _enemySettings;
 
-        protected EnemyBase()
-        {
-            _enemySettings = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
-        }
         abstract public void Move();
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -23,11 +19,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
             }
         }
 
-        public void InitEnemy()
-        {
-            SetSpeed();
-            SetHP();
-        }
+        public abstract void InitEnemy();
 
         public void TakeDamage(int damage)
         {
@@ -44,9 +36,5 @@ namespace Assets.Scripts.Enemy.EnemyTypes
                 //EventBus.Trigger(OnEnemyKilled)
             }
         }
-
-        private void SetHP() => _hp = _enemySettings.EnemyHP;
-        private void SetSpeed() => _speedMovement = Random.Range(_enemySettings.SpeedMin, _enemySettings.SpeedMax);
-
     }
 }

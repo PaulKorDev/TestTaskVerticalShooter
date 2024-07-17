@@ -3,7 +3,7 @@ using Assets.Scripts.Enemy.EnemyTypes;
 
 namespace Assets.Scripts.Enemy.Factory
 {
-    abstract public class EnemyFactory
+    abstract public class EnemyFactory : IService
     {
         protected EnemyFactoryConfig _enemyFactoryConfig;
         protected EnemyFactory() {

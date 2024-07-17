@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Enemy;
 using UnityEngine;
 
 namespace Assets.Scripts.Architecture.StateMachine
@@ -7,6 +8,7 @@ namespace Assets.Scripts.Architecture.StateMachine
     {
         private StateMachine<GameState> _concreteStateMachine = new StateMachine<GameState>();
         [SerializeField] private SceneServiceLocator _sceneServiceLocator;
+        [SerializeField] private EnemySpawner _enemySpawner;
 
         private void Awake()
         {
@@ -21,7 +23,7 @@ namespace Assets.Scripts.Architecture.StateMachine
 
         private void AddStates()
         {
-            _concreteStateMachine.AddState(new BootstrapState(_concreteStateMachine, _sceneServiceLocator));
+            _concreteStateMachine.AddState(new BootstrapState(_concreteStateMachine, _sceneServiceLocator, _enemySpawner));
             _concreteStateMachine.AddState(new GameplayLoopState(_concreteStateMachine));
         }
     }

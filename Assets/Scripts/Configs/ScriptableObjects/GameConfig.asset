@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce467b5c860a2b4d8152c199fda44a2, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  PlayerAttackConfig: {fileID: 0}
-  EnemyFactoryConfig: {fileID: 0}
+  PlayerAttackConfig: {fileID: 11400000, guid: 636a2adceefac694b88837cec73c9314, type: 2}
+  EnemyFactoryConfig: {fileID: 11400000, guid: 2406f5fc35dd99f41be0f293ef210178, type: 2}

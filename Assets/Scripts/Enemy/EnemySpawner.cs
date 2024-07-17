@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Architecture.ServiceLocator;
+﻿using Assets.Scripts.Architecture.ObjectPool;
+using Assets.Scripts.Architecture.ServiceLocator;
 using Assets.Scripts.Enemy.EnemyTypes;
 using UnityEngine;
 
@@ -8,19 +9,21 @@ namespace Assets.Scripts.Enemy
     {
         [SerializeField] private Transform[] _spawnPoints;
 
-        private int _spawnCount;
         private float _timeOut;
-
+        private int _spawnCount;
+        private int _alreadySpawned;
         private EnemyFactoryConfig _enemySpawnConfig;
 
         private void Update()
         {
-            _timeOut -= Time.deltaTime;
-            if (_timeOut <= 0)
+            if (_timeOut <= 0 && _alreadySpawned < _spawnCount)
             {
-                //objectPool.Get();
+                int randomIndex = Random.Range(0, _spawnPoints.Length);
+                ServiceLocator.Get<EnemyObjectPool>().GetObject(_spawnPoints[randomIndex].position);
+                _alreadySpawned++;
                 UpdateTimer();
             }
+            _timeOut -= Time.deltaTime;
         }
 
         public void Init()
@@ -34,16 +37,17 @@ namespace Assets.Scripts.Enemy
         public void UpdateSettings()
         {
             UpdateSpawnCount();
-            UpdateTimer();
         }
 
-        private void UpdateSpawnCount() => _spawnCount = Random.Range(_enemySpawnConfig.EnemyCountMin, _enemySpawnConfig.EnemyCountMax);
+        private void UpdateSpawnCount() {
+            _alreadySpawned = 0;
+            _spawnCount = Random.Range(_enemySpawnConfig.EnemyCountMin, _enemySpawnConfig.EnemyCountMax);
+        }
         private void UpdateTimer() => _timeOut = Random.Range(_enemySpawnConfig.TimeoutMin, _enemySpawnConfig.TimeoutMin);
 
-        private void RemoveEnemy(EnemyBase enemy)
-        {
-            //objectPool.Return(enemy)
-        }
+        private void RemoveEnemy(EnemyBase enemy) => ServiceLocator.Get<EnemyObjectPool>().ReturnObject(enemy);
+
+        
 
 
     }
