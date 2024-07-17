@@ -20,10 +20,15 @@ namespace Assets.Scripts.Architecture.StateMachine
         {
             _concreteStateMachine.CurrentState.UpdateLogic();
         }
+        private void FixedUpdate()
+        {
+            _concreteStateMachine.CurrentState.UpdatePhysic();
+        }
 
         private void AddStates()
         {
             _concreteStateMachine.AddState(new BootstrapState(_concreteStateMachine, _sceneServiceLocator, _enemySpawner));
+            _concreteStateMachine.AddState(new RestartState(_concreteStateMachine));
             _concreteStateMachine.AddState(new GameplayLoopState(_concreteStateMachine));
         }
     }

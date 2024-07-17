@@ -19,12 +19,12 @@ namespace Assets.Scripts.Architecture.StateMachine
 
             _enemySpawner.Init();
 
-            _stateMachine.EnterToState<GameplayLoopState>();
+            LoseWinConditions loseWinConditions = new LoseWinConditions();
+
+            _stateMachine.EnterToState<RestartState>();
         }
 
-        public override void UpdateLogic()
-        {
-
-        }
+        public override void UpdateLogic() { }
+        public override void UpdatePhysic() { }
     }
 }

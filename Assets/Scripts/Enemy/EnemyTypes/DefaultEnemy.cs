@@ -14,10 +14,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         {
             _enemyRgb = GetComponent<Rigidbody2D>();
         }
-        private void Update()
-        {
-            Move();
-        }
+
         override public void InitEnemy()
         {
             _enemySettings = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
@@ -26,7 +23,8 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         }
         public override void Move()
         {
-            _enemyRgb.velocity = Vector2.down * _speedMovement * Time.fixedDeltaTime;
+            transform.Translate(Vector3.down * _speedMovement * Time.deltaTime);
+            //_enemyRgb.velocity = Vector2.down.normalized * _speedMovement * Time.fixedDeltaTime;
         }
         private void SetHP() => _hp = _enemySettings.EnemyHP;
         private void SetSpeed() => _speedMovement = Random.Range(_enemySettings.SpeedMin, _enemySettings.SpeedMax);

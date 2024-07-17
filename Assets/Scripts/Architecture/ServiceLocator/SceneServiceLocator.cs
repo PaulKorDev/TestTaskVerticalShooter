@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Architecture.EventBus;
-using Assets.Scripts.Architecture.ObjectPool;
+﻿using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Enemy.Factory;
+using Assets.Scripts.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Architecture.ServiceLocator
@@ -16,9 +16,21 @@ namespace Assets.Scripts.Architecture.ServiceLocator
             RegisterEventBus();
             RegisterEnemyFactory();
             RegisterEnemyObjectPool();
+            RegisterPlayer();
+            RegisterPlayerMovement();
 
         }
 
+        private void RegisterPlayerMovement()
+        {
+            var playerMovement = new PlayerMovement();
+            ServiceLocator.Register(playerMovement);
+        }
+        private void RegisterPlayer()
+        {
+            var player = GameObject.FindAnyObjectByType<Player.Player>();
+            ServiceLocator.Register(player);
+        }
         private void RegisterEventBus()
         {
             EventBus.EventBus eventBus = new();

@@ -69,6 +69,15 @@ namespace Assets.Scripts.Architecture.ObjectPool
             _activeObjects.Remove(obj);
             _pool.Enqueue(obj);
         }
+        public void ReturnAllActiveObjects()
+        {
+            foreach (T obj in _activeObjects)
+            {
+                _returnEffect(obj);
+                _pool.Enqueue(obj);
+            }
+            _activeObjects.Clear();
+        }
 
         public int CountFreeObjects()
         {
