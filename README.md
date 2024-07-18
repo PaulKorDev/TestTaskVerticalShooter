@@ -1,6 +1,6 @@
 # TestTaskVerticalShooter
 # Current situation
-Now I trying to fix bug related to the win window not appearing after destroying all enemies. I found the reason, I'm thinking how to solve it
+Fixed bug related to the win window not appearing after destroying all enemies. I reason was in twice trigger OnEnemyDead when bullet hitted. To solve this I add isDead flag for enemy
 ## Content
 * [Drafts](#drafts)
 * [What patterns used](#What-patterns-used)
@@ -56,5 +56,5 @@ I decide to finish the test task, but what else can upgrade:
   - Add new AttackModes for different behaviour
   - etc) 
 # What bugs can be:
-  - Sometimes, when you kill all enemies, you won't see the victory window => perhaps problem in Events
+  - Sometimes, when you kill all enemies, you won't see the victory window (FIXED)
   - If play with horizontal resolution, UI will broke => need adjust anchors
