@@ -1,6 +1,6 @@
 # TestTaskVerticalShooter
-# Current situation
-Fixed bug related to the win window not appearing after destroying all enemies. I reason was in twice trigger OnEnemyDead when bullet hitted. To solve this I add isDead flag for enemy
+# Updates
+Fixed bug related to the win window not appearing after destroying all enemies. The reason was in twice trigger OnEnemyDead when bullet hitted. To solve this I add isDead flag for enemy
 ## Content
 * [Drafts](#drafts)
 * [What patterns used](#What-patterns-used)
