@@ -2519,6 +2519,7 @@ MonoBehaviour:
   _player: {fileID: 324831512}
   _enemiesContainer: {fileID: 22086731}
   _bulletsContainer: {fileID: 1452988110}
+  _enemySpawner: {fileID: 1196287167}
 --- !u!4 &1054076507
 Transform:
   m_ObjectHideFlags: 0
