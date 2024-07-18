@@ -1,4 +1,6 @@
 # TestTaskVerticalShooter
+# Current situation
+Now I trying to fix bug related to the win window not appearing after destroying all enemies. I found the reason, I'm thinking how to solve it
 ## Content
 * [Drafts](#drafts)
 * [What patterns used](#What-patterns-used)
