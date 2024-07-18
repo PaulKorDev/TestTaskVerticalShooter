@@ -1,4 +1,6 @@
 # TestTaskVerticalShooter
+# Current situation
+Now I trying to fix bug related to the win window not appearing after destroying all enemies. I found the reason, I'm thinking how to solve it
 ## Content
 * [Drafts](#drafts)
 * [What patterns used](#What-patterns-used)
@@ -34,7 +36,7 @@ For enemy, I also will create object pool
   - EventBus
   - Separate Logic and View
 # Where to start?
-Start from GameStateMachineHandler - it's like entry point
+Start from GameStateMachineHandler - it's like entry point. I develop with resolution 900x1600,so,on other resolution UI can be deformed. I bad adjust it.
 # Where were the difficulties?
   - I spent a lot of time to create high quality architecture and at start I create big EntryPoinit with showing of loading screen and transit between scenes, but for this game it was unnecessarily, so I delete this from my final result.
   - I spen a lot of time to fix bugs
@@ -42,6 +44,7 @@ Start from GameStateMachineHandler - it's like entry point
   - After the little change I had to wait 4 minutes for the Unity load changes.
 # Here's what else I'd like to upgrade in the game
 I decide to finish the test task, but what else can upgrade:
+  - Optimization
   - Background (I import tilemap from AssetStore but forget about it)
   - Rotation of player when shooting
   - Animation of hit for enemies
