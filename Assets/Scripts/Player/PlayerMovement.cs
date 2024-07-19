@@ -36,7 +36,7 @@ namespace Assets.Scripts.Player
         public void Move()
         {
             //_playerRgb.velocity = new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.fixedDeltaTime;
-            _player.transform.Translate(new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.deltaTime);
+            _player.transform.Translate(new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.deltaTime, Space.World);
         }
 
         private void GetInputAxis(out float x, out float y)

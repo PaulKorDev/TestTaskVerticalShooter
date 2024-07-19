@@ -33,11 +33,13 @@ namespace Assets.Scripts.Shooting
             CheckBulletPosition();
         }
 
-        public void SetTargetAndDamage(Vector3 targetPosition)
+        public void RotateToTargetAndSetDamage(Vector3 targetPosition)
         {
 
             _target = targetPosition;
             _direction = targetPosition - transform.position;
+            SetRotation();
+
             _damage = ServiceLocator.Get<AutoShooting>().GetDamage();
         }
 
@@ -46,6 +48,12 @@ namespace Assets.Scripts.Shooting
         public void Fly()
         {
             _bulletRgb.AddForce(_direction * _speed * Time.fixedDeltaTime);
+        }
+
+        private void SetRotation()
+        {
+            float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg - 90;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
 
         private Vector3 CalculateNormalizedDirection(Vector3 targetPos)

@@ -30,7 +30,7 @@ namespace Assets.Scripts.Architecture.ObjectPool
         }
         private static void GetEffect(Bullet bullet, Vector3 spawnPoint) {
             bullet.transform.position = spawnPoint;
-            bullet.SetTargetAndDamage(_targetPosition);
+            bullet.RotateToTargetAndSetDamage(_targetPosition);
             bullet.gameObject.SetActive(true);
         } 
         private static void ReturnEffect(Bullet bullet) => bullet.gameObject.SetActive(false);
