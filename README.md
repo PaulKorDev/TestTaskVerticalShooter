@@ -51,8 +51,6 @@ Start from GameStateMachineHandler - it's like entry point. I develop with resol
   - After the little change I had to wait 4 minutes for the Unity load changes.
 # Here's what else I'd like to upgrade in the game
 I decide to finish the test task, but what else can upgrade:
-  - Optimization
-  - Background (I import tilemap from AssetStore but forget about it)
   - Rotation of player when shooting
   - Animation of hit for enemies
   - Most better physic of bullets
@@ -64,4 +62,4 @@ I decide to finish the test task, but what else can upgrade:
   - etc) 
 # What bugs can be:
   - Sometimes, when you kill all enemies, you won't see the victory window (FIXED)
-  - If play with horizontal resolution, UI will broke => need adjust anchors
+  - If play with horizontal resolution, UI will broke => need adjust anchors (FIXED)
