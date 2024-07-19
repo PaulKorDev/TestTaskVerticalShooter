@@ -82,6 +82,7 @@ namespace Assets.Scripts.Architecture.StateMachine
         private void UnsubscribeFromSignals()
         {
             ServiceLocator.ServiceLocator.Get<EventBus.EventBus>().OnPlayerLost.Unsubscribe(PauseGame);
+            ServiceLocator.ServiceLocator.Get<EventBus.EventBus>().OnPlayerWon.Unsubscribe(PauseGame);
             ServiceLocator.ServiceLocator.Get<EventBus.EventBus>().OnButtonRestartClicked.Unsubscribe(RestartGame);
         }
 
