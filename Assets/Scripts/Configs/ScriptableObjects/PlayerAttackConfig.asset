@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abed5329f937bdd41bb7df1498073efc, type: 3}
   m_Name: PlayerAttackConfig
   m_EditorClassIdentifier: 
-  Range: 0
-  Speed: 0
-  Damage: 0
-  BulletSpeed: 0
+  Range: 7
+  Speed: 0.05
+  Damage: 5
+  BulletSpeed: 300

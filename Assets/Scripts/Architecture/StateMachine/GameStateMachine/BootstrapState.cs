@@ -1,25 +1,30 @@
 ﻿using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Enemy;
 
 namespace Assets.Scripts.Architecture.StateMachine
 {
     public sealed class BootstrapState : GameState
     {
         private SceneServiceLocator _serviceLocator;
-        public BootstrapState(StateMachine<GameState> stateMachine, SceneServiceLocator serviceLocator) : base(stateMachine) 
+        private EnemySpawner _enemySpawner;
+        public BootstrapState(StateMachine<GameState> stateMachine, SceneServiceLocator serviceLocator, EnemySpawner enemySpawner) : base(stateMachine) 
         {
             _serviceLocator = serviceLocator;
+            _enemySpawner = enemySpawner;
         }
 
         public override void Enter()
         {
             _serviceLocator.RegisterAllServices();
 
-            _stateMachine.EnterToState<GameplayLoopState>();
+            _enemySpawner.Init();
+
+            LoseWinConditions loseWinConditions = new LoseWinConditions();
+
+            _stateMachine.EnterToState<RestartState>();
         }
 
-        public override void UpdateLogic()
-        {
-
-        }
+        public override void UpdateLogic() { }
+        public override void UpdatePhysic() { }
     }
 }
