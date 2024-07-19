@@ -1,6 +1,13 @@
 # TestTaskVerticalShooter
 # Updates
-Fixed bug related to the win window not appearing after destroying all enemies. The reason was in twice trigger OnEnemyDead when bullet hitted. To solve this I add isDead flag for enemy
+[18.07.24] 
+  - Fixed bug related to the win window not appearing after destroying all enemies. The reason was in twice trigger OnEnemyDead when bullet hitted. To solve this I add isDead flag for enemy
+
+[19.07.24] 
+  - Now UI correctly showing on all devices, including desktop.
+  - Replace image background to tilemap road. Now game more atmosphered.
+  - Set new color for UI elements for more harmony.
+     
 ## Content
 * [Drafts](#drafts)
 * [What patterns used](#What-patterns-used)
