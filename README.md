@@ -7,6 +7,9 @@
   - Now UI correctly showing on all devices, including desktop.
   - Replace image background to tilemap road. Now game more atmosphered.
   - Set new color for UI elements for more harmony.
+    
+![image](https://github.com/user-attachments/assets/f95390c9-045a-4317-b96f-5ca8cd198dae)
+
      
 ## Content
 * [Drafts](#drafts)
