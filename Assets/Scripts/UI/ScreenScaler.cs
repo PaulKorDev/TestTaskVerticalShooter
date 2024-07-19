@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ScreenScaler : MonoBehaviour
@@ -15,12 +14,6 @@ public class ScreenScaler : MonoBehaviour
         _rectTransform = GetComponent<RectTransform>();
 
         SetAnchorsPosition();
-        ResetSize();
-    }
-
-    private void ResetSize()
-    {
-
     }
 
     private void SetAnchorsPosition()
