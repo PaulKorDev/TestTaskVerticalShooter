@@ -10,7 +10,7 @@ namespace Assets.Scripts.Shooting.AttackModes
         protected float _range;
         protected float _speedShooting;
 
-        public void Init()
+        virtual public void Init()
         {
             PlayerAttackConfig _attackConfig = ServiceLocator.Get<GameConfig>().PlayerAttackConfig;
 

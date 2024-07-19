@@ -21,8 +21,9 @@ namespace Assets.Scripts.Architecture.StateMachine
             _playerMovement = ServiceLocator.ServiceLocator.Get<PlayerMovement>();
             _enemyObjectPool = ServiceLocator.ServiceLocator.Get<EnemyObjectPool>();
             _bulletObjectPool = ServiceLocator.ServiceLocator.Get<BulletObjectPool>();
-            _enemySpawner = GameObject.FindFirstObjectByType<EnemySpawner>();
-            _attackMode = GameObject.FindFirstObjectByType<AutoShooting>();
+            if (_enemySpawner == null)
+                _enemySpawner = GameObject.FindFirstObjectByType<EnemySpawner>();
+            _attackMode = ServiceLocator.ServiceLocator.Get<AutoShooting>();
 
             SubscribeToSignals();
             ResumeGame();
@@ -33,6 +34,7 @@ namespace Assets.Scripts.Architecture.StateMachine
             {
                 _playerMovement.InputHandler();
                 _enemySpawner.TimeOutSpawn();
+                PlayerMovement();
                 EnemyMovement();
                 _attackMode.SearchAndShoot();
             }
@@ -41,10 +43,12 @@ namespace Assets.Scripts.Architecture.StateMachine
         {
             if (!_isPaysed)
             {
-                _playerMovement.Move();
                 BulletMovement();
             }
         }
+
+        private void PlayerMovement() => _playerMovement.Move();
+
         private void EnemyMovement()
         {
             foreach (var enemy in _enemyObjectPool.GetAllActiveObjects())
@@ -72,6 +76,7 @@ namespace Assets.Scripts.Architecture.StateMachine
         private void SubscribeToSignals()
         {
             ServiceLocator.ServiceLocator.Get<EventBus.EventBus>().OnPlayerLost.Subscribe(PauseGame);
+            ServiceLocator.ServiceLocator.Get<EventBus.EventBus>().OnPlayerWon.Subscribe(PauseGame);
             ServiceLocator.ServiceLocator.Get<EventBus.EventBus>().OnButtonRestartClicked.Subscribe(RestartGame);
         }
         private void UnsubscribeFromSignals()

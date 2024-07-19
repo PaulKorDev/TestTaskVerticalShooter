@@ -20,9 +20,9 @@ namespace Assets.Scripts.Architecture.ServiceLocator
             RegisterEventBus();
             RegisterEnemyFactory();
             RegisterEnemyObjectPool();
-            RegisterAttackMode();
             RegisterBulletFactory();
             RegisterBulletObjectPool();
+            RegisterAttackMode();
             RegisterPlayer();
             RegisterPlayerMovement();
 

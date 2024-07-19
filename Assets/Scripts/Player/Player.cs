@@ -12,6 +12,8 @@ namespace Assets.Scripts.Player
         [SerializeField] private int _maxHp;
         [SerializeField] private float _speedMovement;
         private int _hp;
+        private Vector3 _startPosition;
+        private Quaternion _startRotation;
 
 
         private PlayerMovement _movement;
@@ -22,12 +24,15 @@ namespace Assets.Scripts.Player
             _eventBus = ServiceLocator.Get<EventBus>();
             _eventBus.OnFinishLineReached.Subscribe(ReduceHP, 4);
             _eventBus.GameRestarted.Subscribe(InitPlayer);
+            _startPosition = transform.position;
+            _startRotation = transform.rotation;
             InitPlayer();
         }
 
         public void InitPlayer()
         {
             SetHP();
+            SetStartPosition();
         }
 
         public Rigidbody2D GetRigidBody()
@@ -48,6 +53,11 @@ namespace Assets.Scripts.Player
         {
             _hp = Mathf.Clamp(--_hp, 0, _maxHp);
             ServiceLocator.Get<EventBus>().OnHealthChanged.Trigger(_hp);
+        }
+        private void SetStartPosition()
+        {
+            transform.position = _startPosition;
+            transform.rotation = _startRotation;
         }
     }
 }

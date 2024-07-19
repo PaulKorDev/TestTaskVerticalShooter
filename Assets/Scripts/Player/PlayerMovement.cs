@@ -2,6 +2,7 @@
 using Assets.Scripts.Architecture.ServiceLocator;
 using DG.Tweening;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Assets.Scripts.Player
 {
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Player
         public PlayerMovement()
         {
             _player = ServiceLocator.Get<Player>();
+            ServiceLocator.Get<EventBus>().OnShooted.Subscribe(RotateToEnemy);
 
             _playerRgb = _player.GetComponent<Rigidbody2D>();
             _speed = _player.GetSpeed();
@@ -33,7 +35,8 @@ namespace Assets.Scripts.Player
         }
         public void Move()
         {
-            _playerRgb.velocity = new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.fixedDeltaTime;
+            //_playerRgb.velocity = new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.fixedDeltaTime;
+            _player.transform.Translate(new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.deltaTime);
         }
 
         private void GetInputAxis(out float x, out float y)
@@ -42,6 +45,12 @@ namespace Assets.Scripts.Player
             y = Input.GetAxis("Vertical");
         }
      
+        private void RotateToEnemy(Vector3 enemyPosition)
+        {
+            Vector3 direction = enemyPosition - _player.transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
+            _player.transform.DORotate(new Vector3(0, 0, angle), 0.1f);
+        }
 
     }
 
