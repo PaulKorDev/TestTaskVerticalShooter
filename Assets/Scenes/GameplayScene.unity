@@ -2094,6 +2094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneServiceLocator: {fileID: 1054076506}
   _enemySpawner: {fileID: 1196287167}
+  _screenScaler: {fileID: 1411280289}
 --- !u!4 &881660558
 Transform:
   m_ObjectHideFlags: 0
