@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Configs;
 using Assets.Scripts.Enemy;
 
 namespace Assets.Scripts.Architecture.StateMachine
@@ -7,24 +8,33 @@ namespace Assets.Scripts.Architecture.StateMachine
     {
         private SceneServiceLocator _serviceLocator;
         private EnemySpawner _enemySpawner;
-        public BootstrapState(StateMachine<GameState> stateMachine, SceneServiceLocator serviceLocator, EnemySpawner enemySpawner) : base(stateMachine) 
+        private ScreenScaler _screenScaler;
+        public BootstrapState(StateMachine<GameState> stateMachine, SceneServiceLocator serviceLocator, EnemySpawner enemySpawner, ScreenScaler screenScaler) : base(stateMachine) 
         {
             _serviceLocator = serviceLocator;
             _enemySpawner = enemySpawner;
+            _screenScaler = screenScaler;
         }
 
         public override void Enter()
         {
             _serviceLocator.RegisterAllServices();
 
-            _enemySpawner.Init();
-
-            LoseWinConditions loseWinConditions = new LoseWinConditions();
+            InitAll();
 
             _stateMachine.EnterToState<RestartState>();
         }
 
         public override void UpdateLogic() { }
         public override void UpdatePhysic() { }
+
+        private void InitAll()
+        {
+            _enemySpawner.Init();
+            LoseWinConditions loseWinConditions = new LoseWinConditions();
+            ScreenLimits _screenLimits = new ScreenLimits();
+            _screenScaler.Init(_screenLimits);
+
+        }
     }
 }
