@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Architecture.ObjectPool;
+using Assets.Scripts.Configs;
 using Assets.Scripts.Enemy.Factory;
 using Assets.Scripts.Player;
 using Assets.Scripts.Shooting.AttackModes;
@@ -16,6 +17,7 @@ namespace Assets.Scripts.Architecture.ServiceLocator
         public void RegisterAllServices()
         {
             //here register services
+            RegisterScreenLimits();
             RegisterSettings();
             RegisterEventBus();
             RegisterEnemyFactory();
@@ -27,10 +29,14 @@ namespace Assets.Scripts.Architecture.ServiceLocator
             RegisterPlayerMovement();
 
         }
-
+        private void RegisterScreenLimits()
+        {
+            var screenLimits = new ScreenLimits();
+            ServiceLocator.Register(screenLimits);
+        }
         private void RegisterPlayerMovement()
         {
-            var playerMovement = new PlayerMovement();
+            var playerMovement = new PlayerMovement(new PlayerMovementLimits());
             ServiceLocator.Register(playerMovement);
         }
         

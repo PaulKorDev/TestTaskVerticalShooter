@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.ServiceLocator;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Configs
 {
-    public class ScreenLimits
+    public class ScreenLimits : IService
     {
         private float _screenHeight = Screen.height;
         private float _screenWidth = Screen.width;
@@ -73,7 +74,7 @@ namespace Assets.Scripts.Configs
         private void SetPointsOfScreen()
         {
             _bottomLeftPointOfScreen = _cachedCamera.ScreenToWorldPoint(new Vector2(LeftScreenRatioLimit, BottomScreenRatioLimit));
-            _topRightPointOfScreen = _cachedCamera.ScreenToWorldPoint(new Vector2(RightScreenRatioLimit, TopScreenRatioLimit));
+            _topRightPointOfScreen = -_bottomLeftPointOfScreen;//_cachedCamera.ScreenToWorldPoint(new Vector2(RightScreenRatioLimit, TopScreenRatioLimit));
         }
         private void CalculateRatioForOtherDevices()
         {

@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     public class Player : MonoBehaviour, IService
     {
         [SerializeField] private int _maxHp;

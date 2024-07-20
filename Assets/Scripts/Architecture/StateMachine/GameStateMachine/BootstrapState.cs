@@ -32,8 +32,7 @@ namespace Assets.Scripts.Architecture.StateMachine
         {
             _enemySpawner.Init();
             LoseWinConditions loseWinConditions = new LoseWinConditions();
-            ScreenLimits _screenLimits = new ScreenLimits();
-            _screenScaler.Init(_screenLimits);
+            _screenScaler.Init();
 
         }
     }

@@ -1,6 +1,5 @@
-﻿using Assets.Scripts.Architecture.EventBus;
-using Assets.Scripts.Architecture.ServiceLocator;
-using DG.Tweening;
+﻿using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Configs;
 using System;
 using UnityEngine;
 
@@ -8,18 +7,17 @@ namespace Assets.Scripts.Player
 {
     public class PlayerMovement : IService
     {
-        private Rigidbody2D _playerRgb;
         private Player _player;
+        private MovementLimits _playerMovementLimits;
         private float _speed;
 
         private float _axisX;
         private float _axisY;
 
-        public PlayerMovement()
+        public PlayerMovement(MovementLimits playerMovementLimits)
         {
             _player = ServiceLocator.Get<Player>();
-
-            _playerRgb = _player.GetComponent<Rigidbody2D>();
+            _playerMovementLimits = playerMovementLimits;
             _speed = _player.GetSpeed();
         }
 
@@ -29,7 +27,6 @@ namespace Assets.Scripts.Player
         }
         public void Move()
         {
-
             _player.transform.Translate(GetMovementPosition(), Space.World);
         }
 
@@ -42,17 +39,12 @@ namespace Assets.Scripts.Player
 
         private Vector3 GetMovementPosition()
         {
-            Vector3 movementPos = new Vector3(_axisX, _axisY, 0).normalized * (_speed * Time.deltaTime);
-            if (PlayerCanMoveThere(movementPos))
-                return movementPos;
-             else 
-                return Vector3.zero;
+            Vector3 currentPosition = new Vector3(_axisX, _axisY, 0).normalized * (_speed * Time.deltaTime) + _player.transform.position;
+            float movementPosX = Math.Clamp(currentPosition.x, _playerMovementLimits.LeftLimit, _playerMovementLimits.RightLimit);
+            float movementPosY = Math.Clamp(currentPosition.y, _playerMovementLimits.BottomLimit, _playerMovementLimits.TopLimit);
+            return new Vector3 (movementPosX, movementPosY) - _player.transform.position;
         }
 
-        private bool PlayerCanMoveThere(Vector3 movementPos)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

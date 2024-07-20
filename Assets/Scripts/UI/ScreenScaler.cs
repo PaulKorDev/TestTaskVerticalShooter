@@ -1,3 +1,4 @@
+using Assets.Scripts.Architecture.ServiceLocator;
 using Assets.Scripts.Configs;
 using UnityEngine;
 
@@ -6,10 +7,10 @@ public class ScreenScaler : MonoBehaviour
     RectTransform _rectTransform;
     ScreenLimits _screenLimits;
 
-    public void Init(ScreenLimits screenLimits)
+    public void Init()
     {
         _rectTransform = GetComponent<RectTransform>();
-        _screenLimits = screenLimits;
+        _screenLimits = ServiceLocator.Get<ScreenLimits>();
 
         SetAnchorsPosition();
     }
