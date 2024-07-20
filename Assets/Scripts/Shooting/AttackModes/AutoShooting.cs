@@ -22,11 +22,11 @@ namespace Assets.Scripts.Shooting.AttackModes
             base.Init();
             _pool = ServiceLocator.Get<BulletObjectPool>();
             _eventBus = ServiceLocator.Get<EventBus>();
+            _eventBus.OnReadyToShoot.Subscribe(Shoot);
         }
 
         public override void Shoot(Vector3 targetPosition)
         {
-            _eventBus.OnShooted.Trigger(targetPosition);
             _pool.GetObject(_spawnPoint.position, targetPosition);
         }
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Shooting.AttackModes
             if (closestEnemy != null)
             {
                 _direction = closestEnemy.transform.position;
-                Shoot(closestEnemy.transform.position);
+                _eventBus.OnEnemyFound.Trigger(closestEnemy.transform.position);
             }
         }
 

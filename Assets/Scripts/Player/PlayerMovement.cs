@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Shooting.AttackModes;
 using DG.Tweening;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Player
     {
         private Rigidbody2D _playerRgb;
         private Player _player;
+        private EventBus _eventBus;
         private float _speed;
 
         private float _leftLimit;
@@ -23,7 +25,8 @@ namespace Assets.Scripts.Player
         public PlayerMovement()
         {
             _player = ServiceLocator.Get<Player>();
-            ServiceLocator.Get<EventBus>().OnShooted.Subscribe(RotateToEnemy);
+            _eventBus = ServiceLocator.Get<EventBus>();
+            _eventBus.OnEnemyFound.Subscribe(RotateToEnemy);
 
             _playerRgb = _player.GetComponent<Rigidbody2D>();
             _speed = _player.GetSpeed();
@@ -49,7 +52,8 @@ namespace Assets.Scripts.Player
         {
             Vector3 direction = enemyPosition - _player.transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
-            _player.transform.DORotate(new Vector3(0, 0, angle), 0.1f);
+            _player.transform.DORotate(new Vector3(0, 0, angle), 0.1f)
+                .OnComplete(() => _eventBus.OnReadyToShoot.Trigger(enemyPosition));
         }
 
     }
