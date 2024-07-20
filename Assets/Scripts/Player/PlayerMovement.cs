@@ -22,7 +22,7 @@ namespace Assets.Scripts.Player
             _player = ServiceLocator.Get<Player>();
             _playerMovementLimits = playerMovementLimits;
             _eventBus = ServiceLocator.Get<EventBus>();
-            _eventBus.OnEnemyFound.Subscribe(RotateToEnemy);
+            _eventBus.OnShootTimeOuted.Subscribe(RotateToEnemy);
             _speed = _player.GetSpeed();
         }
 

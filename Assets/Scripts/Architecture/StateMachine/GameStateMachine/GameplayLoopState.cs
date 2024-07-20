@@ -38,8 +38,9 @@ namespace Assets.Scripts.Architecture.StateMachine
             PlayerInputHandler();
             PlayerMovement();
             EnemyMovement();
-            ShootLogic();        
             SpawnEnemyLogic();
+            SearchEnemyLogic();
+            ShootLogic();
         }
         public override void UpdatePhysic()
         {
@@ -51,7 +52,8 @@ namespace Assets.Scripts.Architecture.StateMachine
 
         private void SpawnEnemyLogic() => _enemySpawner.TimeOutSpawn();
         private void PlayerInputHandler() => _playerMovement.InputHandler();
-        private void ShootLogic() => _attackMode.SearchAndShoot();
+        private void SearchEnemyLogic() => _attackMode.SearchEnemy();
+        private void ShootLogic() => _attackMode.Shoot();
         private void PlayerMovement() => _playerMovement.Move();
         private void EnemyMovement()
         {

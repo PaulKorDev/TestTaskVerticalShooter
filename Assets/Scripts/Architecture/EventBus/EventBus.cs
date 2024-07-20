@@ -13,7 +13,7 @@ namespace Assets.Scripts.Architecture.EventBus
         public CustomEvent OnEnemyReturned { get; private set; } = new();
 
         //Shooting 
-        public CustomEvent<Vector3> OnEnemyFound { get; private set; }  = new();
+        public CustomEvent<Vector3> OnShootTimeOuted { get; private set; }  = new();
         public CustomEvent<Vector3> OnReadyToShoot { get; private set; }  = new();
 
         //Bullet 

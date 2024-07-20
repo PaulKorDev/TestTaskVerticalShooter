@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Architecture.ServiceLocator;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Shooting.AttackModes
@@ -15,52 +14,55 @@ namespace Assets.Scripts.Shooting.AttackModes
         private EventBus _eventBus;
         private float _shootTimeout;
         private float _searchTimeout;
-        private Vector3 _direction;
+
+        private Transform _currentTarget;
 
         public override void Init()
         {
             base.Init();
             _pool = ServiceLocator.Get<BulletObjectPool>();
             _eventBus = ServiceLocator.Get<EventBus>();
-            _eventBus.OnReadyToShoot.Subscribe(Shoot);
+            _eventBus.OnReadyToShoot.Subscribe(GetShot);
         }
 
-        public override void Shoot(Vector3 targetPosition)
-        {
-            _pool.GetObject(_spawnPoint.position, targetPosition);
-        }
-
-        public void SearchAndShoot()
+        public override void Shoot()
         {
             _shootTimeout -= Time.deltaTime;
-            _searchTimeout -= Time.deltaTime;
-            if (_shootTimeout < 0)
+            if (_shootTimeout < 0 && CheckTargetAlive())
             {
-                if (_searchTimeout < 0)
-                {
-                    Collider2D[] hitEnemies;
-                    hitEnemies = Physics2D.OverlapCircleAll(transform.position, _range, enemyLayer);
-                    if (hitEnemies.Length > 0)
-                    {
-                        _shootTimeout = _speedShooting;
-                        ShootAtClosestEnemy(hitEnemies);
-                    }
-                    _searchTimeout = 0.05f;
-                }
+                _eventBus.OnShootTimeOuted.Trigger(_currentTarget.position);
+                _shootTimeout = _speedShooting;
             }
         }
 
-        private void ShootAtClosestEnemy(Collider2D[] enemies)
+        private void GetShot(Vector3 targetPosition) => _pool.GetObject(_spawnPoint.position, targetPosition);
+
+        public void SearchEnemy()
+        {
+            _searchTimeout -= Time.deltaTime;
+            if (_searchTimeout < 0 && !CheckTargetAlive())
+            {
+                var hitEnemies = Physics2D.OverlapCircleAll(transform.position, _range, enemyLayer);
+                if (hitEnemies.Length > 0)
+                {
+                    _shootTimeout = _speedShooting;
+                    SetAtClosestEnemy(hitEnemies);
+                }
+                _searchTimeout = 0.2f;
+            }
+
+        }
+
+        private void SetAtClosestEnemy(Collider2D[] enemies)
         {
             Collider2D closestEnemy = FindClosestEnemy(enemies);
 
             if (closestEnemy != null)
             {
-                _direction = closestEnemy.transform.position;
-                _eventBus.OnEnemyFound.Trigger(closestEnemy.transform.position);
+                _currentTarget = closestEnemy.transform;
+                Debug.Log("target founded: " + _currentTarget);
             }
         }
-
         private Collider2D FindClosestEnemy(Collider2D[] enemies)
         {
             Collider2D closest = null;
@@ -76,5 +78,6 @@ namespace Assets.Scripts.Shooting.AttackModes
             }
             return closest;
         }
+        private bool CheckTargetAlive() => (_currentTarget != null) ? _currentTarget.gameObject.activeSelf : false;
     }
 }
