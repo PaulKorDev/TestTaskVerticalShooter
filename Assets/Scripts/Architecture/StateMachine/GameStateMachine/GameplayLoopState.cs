@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Enemy;
 using Assets.Scripts.Player;
+using Assets.Scripts.Shooting;
 using Assets.Scripts.Shooting.AttackModes;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Architecture.StateMachine
@@ -30,25 +32,27 @@ namespace Assets.Scripts.Architecture.StateMachine
         }
         public override void UpdateLogic() 
         {
-            if (!_isPaysed)
-            {
-                _playerMovement.InputHandler();
-                _enemySpawner.TimeOutSpawn();
-                PlayerMovement();
-                EnemyMovement();
-                _attackMode.SearchAndShoot();
-            }
+            if (_isPaysed)
+                return;
+
+            PlayerInputHandler();
+            PlayerMovement();
+            EnemyMovement();
+            ShootLogic();        
+            SpawnEnemyLogic();
         }
         public override void UpdatePhysic()
         {
-            if (!_isPaysed)
-            {
-                BulletMovement();
-            }
+            if (_isPaysed)
+                return ;
+
+            BulletMovement();
         }
 
+        private void SpawnEnemyLogic() => _enemySpawner.TimeOutSpawn();
+        private void PlayerInputHandler() => _playerMovement.InputHandler();
+        private void ShootLogic() => _attackMode.SearchAndShoot();
         private void PlayerMovement() => _playerMovement.Move();
-
         private void EnemyMovement()
         {
             foreach (var enemy in _enemyObjectPool.GetAllActiveObjects())
@@ -58,13 +62,14 @@ namespace Assets.Scripts.Architecture.StateMachine
         }
         private void BulletMovement()
         {
-            foreach (var bullet in _bulletObjectPool.GetAllActiveObjects())
+            var copyOfBulletsList = new List<Bullet>(_bulletObjectPool.GetAllActiveObjects());
+            foreach (var bullet in copyOfBulletsList)
             {
                 bullet.Fly();
             };
         }
+
         private void PauseGame() => _isPaysed = true; 
-        
         private void ResumeGame() => _isPaysed = false;
 
         private void RestartGame()

@@ -33,9 +33,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
                 ServiceLocator.Get<EventBus>().OnBulletHit.Trigger(bullet);
             }
         }
-
         public abstract void InitEnemy();
-
         public void TakeDamage(int damage)
         {
             if (damage < 0)
@@ -46,8 +44,6 @@ namespace Assets.Scripts.Enemy.EnemyTypes
 
             CheckIsDead();
         }
-
-
         private void CheckIsDead()
         {
             if (_hp == 0)

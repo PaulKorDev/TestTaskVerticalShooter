@@ -12,73 +12,33 @@ namespace Assets.Scripts.Shooting
         private int _damage;
         private float _speed;
         private Vector3 _target;
-        private Vector3 _direction;
 
-        private float _leftEdge;
-        private float _rightEdge;
-        private float _topEdge;
-        private float _bottomEdge;
-
+        private BulletsMovement _bulletsMovement;
         private Rigidbody2D _bulletRgb;
 
         public void Init()
         {
             _speed = ServiceLocator.Get<GameConfig>().PlayerAttackConfig.BulletSpeed;
-            SetLimits();
             _bulletRgb = transform.GetComponent<Rigidbody2D>();
-        }
-
-        private void Update()
-        {
-            CheckBulletPosition();
+            _bulletsMovement = new BulletsMovement(this, _speed);
         }
 
         public void RotateToTargetAndSetDamage(Vector3 targetPosition)
         {
+            _damage = ServiceLocator.Get<AutoShooting>().GetDamage();
 
             _target = targetPosition;
-            _direction = targetPosition - transform.position;
-            SetRotation();
+            _bulletsMovement.SetRotation(_target);
 
-            _damage = ServiceLocator.Get<AutoShooting>().GetDamage();
+        }
+
+        public void Fly()
+        {
+            _bulletsMovement.Move();
         }
 
         public int GetDamage() => _damage;
 
-        public void Fly()
-        {
-            _bulletRgb.AddForce(_direction * _speed * Time.fixedDeltaTime);
-        }
-
-        private void SetRotation()
-        {
-            float angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg - 90;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        }
-
-        private Vector3 CalculateNormalizedDirection(Vector3 targetPos)
-        {
-            _direction = targetPos - transform.position;
-            float _distance = _direction.magnitude;
-            return _direction / _distance;
-        }
-
-        private void SetLimits()
-        {
-            var edgesOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(0, 0));
-
-            _leftEdge = edgesOfScreen.x;
-            _rightEdge = -edgesOfScreen.x;
-            _topEdge = -edgesOfScreen.y;
-            _bottomEdge = edgesOfScreen.y;
-        }
-        private void CheckBulletPosition()
-        {
-            if (OverBoundsX() || OverBoundsY())
-                ServiceLocator.Get<EventBus>().OnBulletMissed.Trigger(this);
-        }
-        private bool OverBoundsX() => transform.position.x < _leftEdge || transform.position.x > _rightEdge;
-        private bool OverBoundsY() => transform.position.y < _bottomEdge || transform.position.y > _topEdge;
-
+        
     }
 }
