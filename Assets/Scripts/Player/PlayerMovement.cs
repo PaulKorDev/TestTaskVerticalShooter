@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ServiceLocator;
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -10,11 +11,6 @@ namespace Assets.Scripts.Player
         private Rigidbody2D _playerRgb;
         private Player _player;
         private float _speed;
-
-        private float _leftLimit;
-        private float _rightLimit;
-        private float _bottomLimit;
-        private float _topLimit;
 
         private float _axisX;
         private float _axisY;
@@ -33,7 +29,8 @@ namespace Assets.Scripts.Player
         }
         public void Move()
         {
-            _playerRgb.velocity = new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.fixedDeltaTime;
+
+            _player.transform.Translate(GetMovementPosition(), Space.World);
         }
 
         private void GetInputAxis(out float x, out float y)
@@ -43,6 +40,19 @@ namespace Assets.Scripts.Player
         }
      
 
+        private Vector3 GetMovementPosition()
+        {
+            Vector3 movementPos = new Vector3(_axisX, _axisY, 0).normalized * (_speed * Time.deltaTime);
+            if (PlayerCanMoveThere(movementPos))
+                return movementPos;
+             else 
+                return Vector3.zero;
+        }
+
+        private bool PlayerCanMoveThere(Vector3 movementPos)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
