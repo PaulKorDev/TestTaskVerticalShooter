@@ -13,6 +13,8 @@
 [20.07.24]
   - Added rotation when shooting. A shot after the end of the animation of the player's turn
   - Update movement system. Now player move using logic instead physic. The stop is due to Math.Clamp, not from obstacle's collider.
+  - Refactored Bullet's scripts. Separated bullet's movement and bullet's states.
+  - Optimized searching of enemies. Now player search new enemy after killing previously, but not every update. 
      
 ## Content
 * [Drafts](#drafts)
