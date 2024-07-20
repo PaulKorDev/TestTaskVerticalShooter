@@ -1,9 +1,8 @@
 ﻿using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ServiceLocator;
-using Assets.Scripts.Shooting.AttackModes;
 using DG.Tweening;
+using System;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Assets.Scripts.Player
 {
@@ -11,13 +10,7 @@ namespace Assets.Scripts.Player
     {
         private Rigidbody2D _playerRgb;
         private Player _player;
-        private EventBus _eventBus;
         private float _speed;
-
-        private float _leftLimit;
-        private float _rightLimit;
-        private float _bottomLimit;
-        private float _topLimit;
 
         private float _axisX;
         private float _axisY;
@@ -25,8 +18,6 @@ namespace Assets.Scripts.Player
         public PlayerMovement()
         {
             _player = ServiceLocator.Get<Player>();
-            _eventBus = ServiceLocator.Get<EventBus>();
-            _eventBus.OnEnemyFound.Subscribe(RotateToEnemy);
 
             _playerRgb = _player.GetComponent<Rigidbody2D>();
             _speed = _player.GetSpeed();
@@ -38,8 +29,8 @@ namespace Assets.Scripts.Player
         }
         public void Move()
         {
-            //_playerRgb.velocity = new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.fixedDeltaTime;
-            _player.transform.Translate(new Vector3(_axisX, _axisY, 0).normalized * _speed * Time.deltaTime, Space.World);
+
+            _player.transform.Translate(GetMovementPosition(), Space.World);
         }
 
         private void GetInputAxis(out float x, out float y)
@@ -48,14 +39,20 @@ namespace Assets.Scripts.Player
             y = Input.GetAxis("Vertical");
         }
      
-        private void RotateToEnemy(Vector3 enemyPosition)
+
+        private Vector3 GetMovementPosition()
         {
-            Vector3 direction = enemyPosition - _player.transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
-            _player.transform.DORotate(new Vector3(0, 0, angle), 0.1f)
-                .OnComplete(() => _eventBus.OnReadyToShoot.Trigger(enemyPosition));
+            Vector3 movementPos = new Vector3(_axisX, _axisY, 0).normalized * (_speed * Time.deltaTime);
+            if (PlayerCanMoveThere(movementPos))
+                return movementPos;
+             else 
+                return Vector3.zero;
         }
 
+        private bool PlayerCanMoveThere(Vector3 movementPos)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
