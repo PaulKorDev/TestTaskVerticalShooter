@@ -9,6 +9,7 @@ namespace Assets.Scripts.Architecture.StateMachine
         private StateMachine<GameState> _concreteStateMachine = new StateMachine<GameState>();
         [SerializeField] private SceneServiceLocator _sceneServiceLocator;
         [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private ScreenScaler _screenScaler;
 
         private void Awake()
         {
@@ -27,7 +28,7 @@ namespace Assets.Scripts.Architecture.StateMachine
 
         private void AddStates()
         {
-            _concreteStateMachine.AddState(new BootstrapState(_concreteStateMachine, _sceneServiceLocator, _enemySpawner));
+            _concreteStateMachine.AddState(new BootstrapState(_concreteStateMachine, _sceneServiceLocator, _enemySpawner, _screenScaler));
             _concreteStateMachine.AddState(new RestartState(_concreteStateMachine));
             _concreteStateMachine.AddState(new GameplayLoopState(_concreteStateMachine));
         }

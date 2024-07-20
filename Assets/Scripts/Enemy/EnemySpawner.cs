@@ -38,13 +38,14 @@ namespace Assets.Scripts.Enemy
         {
             return _alreadySpawned >= _spawnCount;
         }
+
         private void UpdateSpawnCount() {
             _alreadySpawned = 0;
             _spawnCount = Random.Range(_enemySpawnConfig.EnemyCountMin, _enemySpawnConfig.EnemyCountMax);
         }
         private void SubscribeToSignals()
         {
-            _eventBus.OnEnemyDied.Subscribe(RemoveEnemy, 3);
+            _eventBus.OnEnemyDied.Subscribe(RemoveEnemy, 4);
             _eventBus.OnFinishLineReached.Subscribe(RemoveEnemy, 3);
             _eventBus.GameRestarted.Subscribe(RemoveAllEnemies);
             _eventBus.GameRestarted.Subscribe(UpdateSpawnCount);
@@ -58,10 +59,14 @@ namespace Assets.Scripts.Enemy
         }
         private void UpdateTimer() => _timeOut = Random.Range(_enemySpawnConfig.TimeoutMin, _enemySpawnConfig.TimeoutMin);
 
-        private void RemoveAllEnemies() => ServiceLocator.Get<EnemyObjectPool>().ReturnAllActiveObjects();
+        private void RemoveAllEnemies()
+        {
+            ServiceLocator.Get<EnemyObjectPool>().ReturnAllActiveObjects();
+        }
         private void RemoveEnemy(EnemyBase enemy)
         {
             ServiceLocator.Get<EnemyObjectPool>().ReturnObject(enemy);
+            _eventBus.OnEnemyReturned.Trigger();
         }
         
     }

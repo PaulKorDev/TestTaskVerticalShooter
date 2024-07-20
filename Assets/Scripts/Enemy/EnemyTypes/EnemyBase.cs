@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ServiceLocator;
 using Assets.Scripts.Shooting;
-using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy.EnemyTypes
@@ -10,29 +9,37 @@ namespace Assets.Scripts.Enemy.EnemyTypes
     {
         protected int _hp;
         protected float _speedMovement;
+        protected bool _isDead;
 
         abstract public void Move();
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.tag == "Obstacle") {
-                ServiceLocator.Get<EventBus>().OnFinishLineReached.Trigger(this);
+            if (!_isDead)
+            {
+                if (collision.gameObject.tag == "Obstacle")
+                {
+                    _isDead = true;
+                    ServiceLocator.Get<EventBus>().OnFinishLineReached.Trigger(this);
+                }
             }
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            var bullet = collision.gameObject.GetComponent<Bullet>();
-            TakeDamage(bullet.GetDamage());
-            ServiceLocator.Get<EventBus>().OnBulletHit.Trigger(bullet);
-
-            
+            if (!_isDead)
+            {
+                var bullet = collision.gameObject.GetComponent<Bullet>();
+                TakeDamage(bullet.GetDamage());
+                ServiceLocator.Get<EventBus>().OnBulletHit.Trigger(bullet);
+            }
         }
 
         public abstract void InitEnemy();
 
         public void TakeDamage(int damage)
         {
-            if (damage < 0) {
+            if (damage < 0)
+            {
                 throw new System.Exception("Damage can't be more than 0");
             }
             _hp = Mathf.Clamp(_hp - damage, 0, _hp);
@@ -41,9 +48,11 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         }
 
 
-        private void CheckIsDead() {
+        private void CheckIsDead()
+        {
             if (_hp == 0)
             {
+                _isDead = true;
                 ServiceLocator.Get<EventBus>().OnEnemyDied.Trigger(this);
             }
         }

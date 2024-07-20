@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Architecture.ServiceLocator;
 using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ObjectPool;
-using Assets.Scripts.Enemy.EnemyTypes;
 using Assets.Scripts.Enemy;
 using UnityEngine;
 
@@ -16,10 +15,9 @@ namespace Assets.Scripts
             _eventBus = ServiceLocator.Get<EventBus>();
             _enemySpawner = GameObject.FindAnyObjectByType<EnemySpawner>();
 
-            _eventBus.OnFinishLineReached.Subscribe(CheckWinLoseConditions, 2);
-            _eventBus.OnEnemyDied.Subscribe(CheckWinLoseConditions, 2);
+            _eventBus.OnEnemyReturned.Subscribe(CheckWinLoseConditions);
         }
-        private void CheckWinLoseConditions(EnemyBase enemy)
+        private void CheckWinLoseConditions()
         {
             if (CheckLoseCondition())
                 return;
@@ -36,10 +34,10 @@ namespace Assets.Scripts
         }
         private void CheckWinCondition()
         {
-            var countOfActiveEnemies = ServiceLocator.Get<EnemyObjectPool>().CountActiveObjects();
+            var leftEnemies = ServiceLocator.Get<EnemyObjectPool>().CountActiveObjects();
             var playerHP = ServiceLocator.Get<Player.Player>().GetHP();
             var allEnemiesAlreadySpawned = _enemySpawner.isAllUnitSpawned();
-            if (allEnemiesAlreadySpawned && playerHP != 0 && countOfActiveEnemies == 0)
+            if (allEnemiesAlreadySpawned && playerHP != 0 && leftEnemies == 0)
             {
                 _eventBus.OnPlayerWon.Trigger();
             }

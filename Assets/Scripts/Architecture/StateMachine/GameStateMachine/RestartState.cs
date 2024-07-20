@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Architecture.EventBus;
-
-namespace Assets.Scripts.Architecture.StateMachine
+﻿namespace Assets.Scripts.Architecture.StateMachine
 {
     public sealed class RestartState : GameState
     {
