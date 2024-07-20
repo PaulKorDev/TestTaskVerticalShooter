@@ -10,6 +10,9 @@
     
 ![image](https://github.com/user-attachments/assets/f95390c9-045a-4317-b96f-5ca8cd198dae)
 
+[20.07.24]
+  - Added rotation when shooting. A shot after the end of the animation of the player's turn
+  - Update movement system. Now player move using logic instead physic. The stop is due to Math.Clamp, not from obstacle's collider.
      
 ## Content
 * [Drafts](#drafts)
