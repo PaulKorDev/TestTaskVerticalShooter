@@ -21,7 +21,8 @@ namespace Assets.Scripts.Shooting
 
         public void Move()
         {
-            _bulletRgb.AddForce(_normalizedDirection * _bulletSpeed * Time.fixedDeltaTime);
+            _bulletRgb.AddForce(_normalizedDirection * _bulletSpeed );
+
             CheckBulletPosition();
         }
         public void SetRotation(Vector3 targetPos)
