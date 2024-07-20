@@ -73,8 +73,14 @@ namespace Assets.Scripts.Configs
         }
         private void SetPointsOfScreen()
         {
-            _bottomLeftPointOfScreen = _cachedCamera.ScreenToWorldPoint(new Vector2(LeftScreenRatioLimit, BottomScreenRatioLimit));
-            _topRightPointOfScreen = -_bottomLeftPointOfScreen;//_cachedCamera.ScreenToWorldPoint(new Vector2(RightScreenRatioLimit, TopScreenRatioLimit));
+            float leftOffset = LeftScreenRatioLimit * _screenWidth;
+            float rightOffset = RightScreenRatioLimit * _screenWidth;
+            float topOffset = TopScreenRatioLimit * _screenHeight;
+            float bottomOffset = BottomScreenRatioLimit * _screenHeight;
+
+            _bottomLeftPointOfScreen = _cachedCamera.ScreenToWorldPoint(new Vector3(leftOffset, bottomOffset));
+            _topRightPointOfScreen = _cachedCamera.ScreenToWorldPoint(new Vector2(rightOffset, topOffset));
+
         }
         private void CalculateRatioForOtherDevices()
         {
