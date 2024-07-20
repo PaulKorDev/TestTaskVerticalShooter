@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Architecture.ObjectPool;
+﻿using Assets.Scripts.Architecture.EventBus;
+using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Architecture.ServiceLocator;
 using System;
 using UnityEngine;
@@ -11,15 +12,22 @@ namespace Assets.Scripts.Shooting.AttackModes
         [SerializeField] private LayerMask enemyLayer;
 
         private BulletObjectPool _pool;
+        private EventBus _eventBus;
         private float _shootTimeout;
         private float _searchTimeout;
         private Vector3 _direction;
 
-
+        public override void Init()
+        {
+            base.Init();
+            _pool = ServiceLocator.Get<BulletObjectPool>();
+            _eventBus = ServiceLocator.Get<EventBus>();
+            _eventBus.OnReadyToShoot.Subscribe(Shoot);
+        }
 
         public override void Shoot(Vector3 targetPosition)
         {
-            ServiceLocator.Get<BulletObjectPool>().GetObject(_spawnPoint.position, targetPosition);
+            _pool.GetObject(_spawnPoint.position, targetPosition);
         }
 
         public void SearchAndShoot()
@@ -49,7 +57,7 @@ namespace Assets.Scripts.Shooting.AttackModes
             if (closestEnemy != null)
             {
                 _direction = closestEnemy.transform.position;
-                Shoot(closestEnemy.transform.position);
+                _eventBus.OnEnemyFound.Trigger(closestEnemy.transform.position);
             }
         }
 

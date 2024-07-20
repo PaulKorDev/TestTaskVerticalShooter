@@ -1,47 +1,23 @@
+using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Configs;
 using UnityEngine;
 
 public class ScreenScaler : MonoBehaviour
 {
     RectTransform _rectTransform;
+    ScreenLimits _screenLimits;
 
-    private float _screenHeight = Screen.height;
-    private float _screenWidth = Screen.width;
-    private Vector2 _anchorsMin;
-    private Vector2 _anchorsMax;
-
-    void Awake()
+    public void Init()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _screenLimits = ServiceLocator.Get<ScreenLimits>();
 
         SetAnchorsPosition();
     }
 
     private void SetAnchorsPosition()
     {
-        float xMin;
-        float xMax;
-        bool mobileResolution = (_screenWidth / _screenHeight <= 0.5625f); //0.5625 = 9/16
-        
-        if (mobileResolution)
-        {
-            xMin = 0;
-            xMax = 1;
-        }
-        else
-        {
-            CalculateAnchorsForOtherDevices(out xMin, out xMax);
-        }
-
-        _rectTransform.anchorMin = new Vector2(xMin, 0);
-        _rectTransform.anchorMax = new Vector2(xMax, 1);
-    }
-
-    private void CalculateAnchorsForOtherDevices(out float minX, out float maxX)
-    {
-        float targetWidth = _screenHeight * 0.5625f;
-        float ratioTargetWidthToCurrentWidth = targetWidth / _screenWidth;
-        float halfOfRatio = ratioTargetWidthToCurrentWidth * 0.5f;
-        minX = 0.5f - halfOfRatio; //0.5 - middle of screen
-        maxX = 0.5f + halfOfRatio; 
+        _rectTransform.anchorMin = new Vector2(_screenLimits.LeftScreenRatioLimit, _screenLimits.BottomScreenRatioLimit);
+        _rectTransform.anchorMax = new Vector2(_screenLimits.RightScreenRatioLimit, _screenLimits.TopScreenRatioLimit);
     }
 }
