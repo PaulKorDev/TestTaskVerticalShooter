@@ -10,6 +10,7 @@ namespace Assets.Scripts.Shooting.AttackModes
     {
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private LayerMask enemyLayer;
+        [SerializeField] private ParticleSystem _shootParticle;
 
         private BulletObjectPool _pool;
         private EventBus _eventBus;
@@ -36,7 +37,11 @@ namespace Assets.Scripts.Shooting.AttackModes
             }
         }
 
-        private void GetShot(Vector3 targetPosition) => _pool.GetObject(_spawnPoint.position, targetPosition);
+        private void GetShot(Vector3 targetPosition)
+        {
+            _shootParticle.Play();
+            _pool.GetObject(_spawnPoint.position, targetPosition);
+        }
 
         public void SearchEnemy()
         {
