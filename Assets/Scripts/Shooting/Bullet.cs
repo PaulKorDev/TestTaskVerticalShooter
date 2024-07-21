@@ -1,12 +1,10 @@
-﻿using Assets.Scripts.Architecture.EventBus;
-using Assets.Scripts.Architecture.ServiceLocator;
+﻿using Assets.Scripts.Architecture.ServiceLocator;
 using Assets.Scripts.Shooting.AttackModes;
-using DG.Tweening;
 using UnityEngine;
 
 namespace Assets.Scripts.Shooting
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(CapsuleCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
     public class Bullet : MonoBehaviour
     {
         private int _damage;
