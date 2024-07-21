@@ -61,7 +61,6 @@ namespace Assets.Scripts.Shooting.AttackModes
             if (closestEnemy != null)
             {
                 _currentTarget = closestEnemy.GetComponent<EnemyBase>();
-                Debug.Log("target founded: " + _currentTarget);
             }
         }
         private Collider2D FindClosestEnemy(Collider2D[] enemies)
