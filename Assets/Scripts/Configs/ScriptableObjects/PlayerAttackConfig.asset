@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerAttackConfig
   m_EditorClassIdentifier: 
   Range: 7
-  Speed: 0.3
-  Damage: 5
+  Speed: 0.1
+  Damage: 2
   BulletSpeed: 300

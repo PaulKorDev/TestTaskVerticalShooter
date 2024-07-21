@@ -17,5 +17,5 @@ MonoBehaviour:
   EnemyCountMax: 16
   TimeoutMin: 0.3
   TimeoutMax: 1
-  SpeedMin: 3
-  SpeedMax: 8
+  SpeedMin: 1
+  SpeedMax: 3
