@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Architecture.EventBus;
-using Assets.Scripts.Architecture.ServiceLocator;
+﻿using Assets.Scripts.Architecture.ServiceLocator;
 using UnityEngine;
 
 namespace Assets.Scripts.Shooting.AttackModes
@@ -21,6 +20,6 @@ namespace Assets.Scripts.Shooting.AttackModes
 
         public int GetDamage() => _damage;
 
-        public abstract void Shoot(Vector3 targetPosition);
+        public abstract void Shoot();
     }
 }

@@ -18,7 +18,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         override public void InitEnemy()
         {
             _enemySettings = ServiceLocator.Get<GameConfig>().EnemyFactoryConfig;
-            _isDead = false;
+            IsDead = false;
             SetSpeed();
             SetHP();
         }

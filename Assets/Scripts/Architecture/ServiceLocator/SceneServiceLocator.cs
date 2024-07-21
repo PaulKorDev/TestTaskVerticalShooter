@@ -39,7 +39,7 @@ namespace Assets.Scripts.Architecture.ServiceLocator
             var playerMovement = new PlayerMovement(new PlayerMovementLimits());
             ServiceLocator.Register(playerMovement);
         }
-        
+
         private void RegisterAttackMode()
         {
             _autoShooting.Init();
