@@ -9,24 +9,24 @@ namespace Assets.Scripts.Enemy.EnemyTypes
     {
         protected int _hp;
         protected float _speedMovement;
-        protected bool _isDead;
+        public bool IsDead { get; protected set; }
 
         abstract public void Move();
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (!_isDead)
+            if (!IsDead)
             {
                 if (collision.gameObject.tag == "Obstacle")
                 {
-                    _isDead = true;
+                    IsDead = true;
                     ServiceLocator.Get<EventBus>().OnFinishLineReached.Trigger(this);
                 }
             }
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!_isDead)
+            if (!IsDead)
             {
                 var bullet = collision.gameObject.GetComponent<Bullet>();
                 TakeDamage(bullet.GetDamage());
@@ -48,7 +48,7 @@ namespace Assets.Scripts.Enemy.EnemyTypes
         {
             if (_hp == 0)
             {
-                _isDead = true;
+                IsDead = true;
                 ServiceLocator.Get<EventBus>().OnEnemyDied.Trigger(this);
             }
         }

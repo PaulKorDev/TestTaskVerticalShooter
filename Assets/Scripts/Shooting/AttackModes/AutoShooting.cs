@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Architecture.EventBus;
 using Assets.Scripts.Architecture.ObjectPool;
 using Assets.Scripts.Architecture.ServiceLocator;
+using Assets.Scripts.Enemy.EnemyTypes;
 using UnityEngine;
 
 namespace Assets.Scripts.Shooting.AttackModes
@@ -15,7 +16,7 @@ namespace Assets.Scripts.Shooting.AttackModes
         private float _shootTimeout;
         private float _searchTimeout;
 
-        private Transform _currentTarget;
+        private EnemyBase _currentTarget;
 
         public override void Init()
         {
@@ -30,7 +31,7 @@ namespace Assets.Scripts.Shooting.AttackModes
             _shootTimeout -= Time.deltaTime;
             if (_shootTimeout < 0 && CheckTargetAlive())
             {
-                _eventBus.OnShootTimeOuted.Trigger(_currentTarget.position);
+                _eventBus.OnShootTimeOuted.Trigger(_currentTarget.transform.position);
                 _shootTimeout = _speedShooting;
             }
         }
@@ -59,7 +60,7 @@ namespace Assets.Scripts.Shooting.AttackModes
 
             if (closestEnemy != null)
             {
-                _currentTarget = closestEnemy.transform;
+                _currentTarget = closestEnemy.GetComponent<EnemyBase>();
                 Debug.Log("target founded: " + _currentTarget);
             }
         }
@@ -78,6 +79,6 @@ namespace Assets.Scripts.Shooting.AttackModes
             }
             return closest;
         }
-        private bool CheckTargetAlive() => (_currentTarget != null) ? _currentTarget.gameObject.activeSelf : false;
+        private bool CheckTargetAlive() => (_currentTarget != null) ? !_currentTarget.IsDead : false;
     }
 }
