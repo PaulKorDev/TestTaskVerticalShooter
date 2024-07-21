@@ -59,14 +59,12 @@ Start from GameStateMachineHandler - it's like entry point. I develop with resol
 # Where were the difficulties?
   - I spent a lot of time to create high quality architecture and at start I create big EntryPoinit with showing of loading screen and transit between scenes, but for this game it was unnecessarily, so I delete this from my final result.
   - I spen a lot of time to fix bugs
-  - Some simple functionality turned out to be not so simple
-  - After the little change I had to wait 4 minutes for the Unity load changes.
 # Here's what else I'd like to upgrade in the game
 I decide to finish the test task, but what else can upgrade:
-  - Rotation of player when shooting
+  ✓ Rotation of player when shooting
+  ✓ Most better physic of bullets
+  ✓ Some refactor code in Shooting folder (Towards the end I started making dirty code due to fatigue)
   - Animation of hit for enemies
-  - Most better physic of bullets
-  - Some refactor code in Shooting folder (Towards the end I started making dirty code due to fatigue)
 # How you can to expand my game
   - Add new enemies - I create very flexible architecture for this
   - Add new bullets - but need make class Bullet - abstract and some refactor code
