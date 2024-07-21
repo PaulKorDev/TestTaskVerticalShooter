@@ -16,7 +16,10 @@
   - Refactored Bullet's scripts. Separated bullet's movement and bullet's states.
   - Optimized searching of enemies. Now player search new enemy after killing previously, but not every update.
   - Add particle when shooting, and add trail to bullets
-     
+
+![image](https://github.com/user-attachments/assets/1525a426-33ae-45f4-8709-43afd78ad713)
+
+
 ## Content
 * [Drafts](#drafts)
 * [What patterns used](#What-patterns-used)
